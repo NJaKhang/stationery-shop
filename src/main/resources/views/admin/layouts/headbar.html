@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="admin-headbar">
+    <!-- wapper -->
+    <div class="container-lg px-4">
+
+
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse">
+            <!-- left element -->
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item ">
+                    <h4><a class="nav-link text-primary fw-bold" href="#">Admin Page</a></h4>
+                </li>
+            </ul>
+            <!-- Left links -->
+            <!-- end left element -->
+
+
+            <!-- right element -->
+            <div class="d-flex align-items-center">
+                <!-- Notifications -->
+                <div class="dropdown">
+                    <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="#"
+                       id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                        <!-- message -->
+                    </ul>
+                </div>
+                <!-- end Notifications  -->
+
+                <!-- avatar -->
+                <div class="dropdown">
+                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                       id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown"
+                       aria-expanded="false">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small_2x/user-profile-icon-free-vector.jpg" class="rounded-circle"
+                             height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                        <li>
+                            <a class="dropdown-item" href="#">My profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Settings</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end avatar -->
+            </div>
+            <!-- end right element -->
+        </div>
+    </div>
+    <!-- end wapper -->
+</nav>
+<!-- end navbar -->
