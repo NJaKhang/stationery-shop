@@ -150,10 +150,11 @@
                                     </div>
                                     <div class="single-shorter">
                                         <label>Sort By :</label>
-                                        <select>
-                                            <option selected="selected">Name</option>
-                                            <option>Price</option>
-                                            <option>Size</option>
+                                        <select onchange="location = this.value">
+                                            <option th:selected="${sortParam eq 'name,ASC'}" th:value="@{'/products?page=1&sort=name,asc'}"><a th:href="@{/products(page=1,sort=name,asc)}">Name a</a></option>
+                                            <option th:selected="${sortParam eq 'name,DESC'}" th:value="@{'/products?page=1&sort=name,desc'}"><a th:href="@{/products(page=1,sort=name,desc)}">Name d</a></option>
+                                            <option th:selected="${sortParam eq 'price,ASC'}" th:value="@{'/products?page=1&sort=price,asc'}"><a th:href="@{/products(page=1,sort=price,asc)}">Price a</a></option>
+                                            <option th:selected="${sortParam eq 'price,DESC'}" th:value="@{'/products?page=1&sort=price,desc'}"><a th:href="@{/products(page=1,sort=price,desc)}">Price d</a></option>
                                         </select>
                                     </div>
                                 </div>
@@ -204,12 +205,12 @@
     <!--/ End Product Style 1  -->
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
+            <li class="page-item" th:disabled="${products.isFirst()}">
+                <a class="page-link" th:href="@{/products(page=${products.getNumber()-1},sort=${sortParam}, size=${products.size})}">Previous</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#" th:text="${products.getNumber()}"></a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+            <li class="page-item" th:each="page: ${#numbers.sequence(1, products.getTotalPages())}"><a class="page-link" th:href="@{/products(page=${page},sort=${sortParam}, size=${products.size})}" th:text="${page}"></a></li>
+            <li class="page-item" th:disabled="${products.isLast()}">
+                <a class="page-link" th:href="@{/products(page=${products.getNumber()+1},sort=${sortParam}, size=${products.size})}">Next</a>
             </li>
         </ul>
     </nav>
