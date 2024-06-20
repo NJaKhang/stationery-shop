@@ -9,7 +9,7 @@ public class HomeController {
     @GetMapping("/")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin/home");
+        modelAndView.setViewName("web/home");
         return modelAndView;
     }
 }

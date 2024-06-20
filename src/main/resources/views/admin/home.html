@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="/admin/layouts/admin-layout::admin-layout(1, 'Admin home', ~{::#content}, ~{::script})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/admin/layout/admin-layout::admin-layout('Admin home', ~{::#content})">
 <body>
 <section id="content">
-
 </section>
-<th:block th:fragment="script">
-
-</th:block>
 </body>
 
 </html>

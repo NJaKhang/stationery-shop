@@ -1,9 +1,10 @@
 package com.group.sshop.models.entities;
 
+import com.group.sshop.models.enums.UserRole;
 import com.group.sshop.models.enums.UserStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "avatar_id")
@@ -20,9 +24,8 @@ public class User extends AbstractEntity{
     private String email;
     private String fullName;
     private String password;
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     private Timestamp verifiedAt;
     private UserStatus status;
 }

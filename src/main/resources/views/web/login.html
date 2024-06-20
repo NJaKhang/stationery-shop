@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vn" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/web/layout/layout::layout('Trang chủ', ~{::#content}, false)">
+<body>
+<section id="content">
+    <!-- Start Checkout -->
+    <section class="shop checkout section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12 p-5">
+                    <div class="checkout-form">
+                        <h2>Make Your Checkout Here</h2>
+                        <p>Please register in order to checkout more quickly</p>
+                        <!-- Form -->
+                        <form class="form" method="post" action="/process-login">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label>Địa chỉ email<span>*</span></label>
+                                        <input type="text" name="email" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label>Mật khẩu<span>*</span></label>
+                                        <input type="text" name="password" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12 mb-2">
+                                    <label class="checkbox-inline" for="3"><input name="saveAccount" id="3" type="checkbox">
+                                        Lưu đăng nhập
+                                    </label>
+
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12 mb-2">
+                                    <button type="submit" class="btn w-100">proceed to checkout</button>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    Chưa có tài khoản ? <a href="/register">Đăng ký</a>
+                                </div>
+
+                            </div>
+                        </form>
+                        <!--/ End Form -->
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/ End Checkout -->
+</section>
+</body>
+
+</html>

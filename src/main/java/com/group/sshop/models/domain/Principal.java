@@ -24,7 +24,7 @@ public class Principal implements UserDetails {
 
     public static Principal create(User user){
         return Principal.builder()
-                .authorities(List.of(new SimpleGrantedAuthority(user.getRole().getRole())))
+                .authorities(List.of(new SimpleGrantedAuthority(user.getRole().name())))
                 .id(user.getId())
                 .email(user.getEmail())
                 .password(user.getPassword())
