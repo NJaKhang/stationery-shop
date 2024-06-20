@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class ProductRecord {
     @Id
-    private UUID id;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId

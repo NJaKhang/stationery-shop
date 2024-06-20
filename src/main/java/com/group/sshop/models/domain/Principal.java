@@ -14,7 +14,7 @@ import java.util.*;
 @Data
 @Builder
 public class Principal implements UserDetails {
-    private UUID id;
+    private Long id;
     private String email;
     private Boolean isVerified;
     private String fullName;

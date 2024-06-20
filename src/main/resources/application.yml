@@ -1,6 +1,6 @@
 spring:
     datasource:
-        password: mysql
+        password: 1122
         url: jdbc:mysql://localhost:3306/stationery_shop?useSSL=false&allowPublicKeyRetrieval=true
         username: root
     jpa:
@@ -9,6 +9,9 @@ spring:
             ddl-auto: none
         sql-format: true
         show-sql: true
+
+
+
 
 
 storage:

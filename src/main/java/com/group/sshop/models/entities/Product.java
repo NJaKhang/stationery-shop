@@ -40,6 +40,8 @@ public class Product extends AbstractEntity {
     @JoinTable(joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id"))
     private List<Image> images;
+
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
 }

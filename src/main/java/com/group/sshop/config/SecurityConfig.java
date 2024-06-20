@@ -32,9 +32,10 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> registry
-                                .requestMatchers("/login","/register" ,"/", "/home", "/repository/**", "/api/**", "/ckfinder/**").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                                .requestMatchers("/staff/**").hasAuthority("STAFF")).formLogin(configurer -> configurer
+                                .requestMatchers("/staff/**").hasAuthority("STAFF")
+                        .anyRequest().permitAll()
+                ).formLogin(configurer -> configurer
                                 .loginProcessingUrl("/process-login")
                                 .loginPage("/login")
                                 .usernameParameter("email")
