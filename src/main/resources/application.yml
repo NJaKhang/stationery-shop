@@ -1,14 +1,20 @@
 spring:
     datasource:
-        password: mysql
+        password: 1122
         url: jdbc:mysql://localhost:3306/stationery_shop?useSSL=false&allowPublicKeyRetrieval=true
         username: root
     jpa:
         database-platform: org.hibernate.dialect.MySQLDialect
         hibernate:
-            ddl-auto: none
+            ddl-auto: update
         sql-format: true
         show-sql: true
+    data:
+        web:
+            pageable:
+                one-indexed-parameters: true
+
+
 
 
 storage:

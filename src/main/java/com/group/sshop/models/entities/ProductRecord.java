@@ -8,15 +8,17 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
+@Table
 public class ProductRecord {
     @Id
-    private UUID id;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id")
     private Product track;
 
-    private int sale;
+    private int sold;
     private int stock;
 }

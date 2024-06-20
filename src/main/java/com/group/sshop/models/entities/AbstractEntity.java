@@ -20,8 +20,8 @@ import java.util.UUID;
 @SuperBuilder
 public abstract class AbstractEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    protected UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     @CreatedDate
     protected Timestamp createdAt;
     @LastModifiedDate
