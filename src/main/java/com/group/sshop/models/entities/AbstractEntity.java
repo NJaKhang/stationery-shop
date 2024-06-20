@@ -10,7 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
-import java.util.UUID;
+
 
 @MappedSuperclass
 @Getter
@@ -20,8 +20,8 @@ import java.util.UUID;
 @SuperBuilder
 public abstract class AbstractEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    protected UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     @CreatedDate
     protected Timestamp createdAt;
     @LastModifiedDate

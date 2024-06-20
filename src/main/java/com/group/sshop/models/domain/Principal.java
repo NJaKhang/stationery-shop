@@ -14,7 +14,7 @@ import java.util.*;
 @Data
 @Builder
 public class Principal implements UserDetails {
-    private UUID id;
+    private Long id;
     private String email;
     private Boolean isVerified;
     private String fullName;
@@ -66,6 +66,6 @@ public class Principal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !Objects.equals(status, UserStatus.ENABLED) && isVerified;
+        return Objects.equals(status, UserStatus.ENABLED) && isVerified;
     }
 }
