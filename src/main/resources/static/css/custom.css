@@ -1,24 +1,10 @@
-.product-name-wrapper {
-    position: relative;
-    display: inline-block;
-    max-width: 200px; /* Chọn độ rộng phù hợp */
-    max-height: 3em; /* Chiều cao tương ứng với 2 dòng văn bản */
-    overflow: hidden;
-}
-
 .product-name {
     display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số lượng hàng bạn muốn hiển thị */
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
     overflow: hidden;
-}
-
-.product-name-wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50px; /* Độ rộng của phần fade */
-    height: 1em; /* Độ cao của phần fade, tương ứng với chiều cao của 1 dòng văn bản */
-    background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.2em; /* Điều chỉnh giá trị này tùy thuộc vào kích thước font */
+    max-height: 2.4em; /* Điều chỉnh giá trị này tùy thuộc vào kích thước font */
 }

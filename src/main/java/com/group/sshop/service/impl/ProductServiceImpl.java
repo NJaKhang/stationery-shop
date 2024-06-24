@@ -93,6 +93,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<Product> findPageByCategory(Pageable pageable, String categoryAlias) {
+        return productRepository.findByCategory(pageable, categoryAlias);
+    }
+
+    @Override
     public void update(Long id, ProductForm productForm) {
         Product product = findById(id);
         Image image = product.getThumbnail();

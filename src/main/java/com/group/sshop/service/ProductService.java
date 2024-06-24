@@ -30,4 +30,5 @@ public interface ProductService {
   
      Page<Product> findPage(Pageable pageable);
 
+    Page<Product> findPageByCategory(Pageable pageable, String categoryAlias);
 }
