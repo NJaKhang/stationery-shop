@@ -44,4 +44,7 @@ public class Product extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
+    private double getDropPrice(){
+        return this.price - this.discount;
+    }
 }

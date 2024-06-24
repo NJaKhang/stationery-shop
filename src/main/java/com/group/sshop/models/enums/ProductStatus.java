@@ -1,5 +1,7 @@
 package com.group.sshop.models.enums;
 
 public enum ProductStatus {
-    AVAILABLE
+    AVAILABLE,
+    OUT_STOCK,
+    COMING_SOON
 }
