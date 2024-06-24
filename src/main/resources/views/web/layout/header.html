@@ -89,35 +89,28 @@
                         </div>
                         <div class="sinlge-bar shopping">
                             <a href="#" class="single-icon"><i class="ti-bag"></i> <span
-                                    class="total-count">2</span></a>
+                                    class="total-count" th:text="${#lists.size(cart.items)}">2</span></a>
                             <!-- Shopping Item -->
                             <div class="shopping-item">
                                 <div class="dropdown-cart-header">
-                                    <span>2 Mặt Hàng</span>
-                                    <a href="#">Xem Giỏ Hàng</a>
+                                    <span th:text="${#lists.size(cart.items)} + ' Mặt hàng'">2 Mặt Hàng</span>
+                                    <a href="/cart">Xem Giỏ Hàng</a>
                                 </div>
                                 <ul class="shopping-list">
-                                    <li>
-                                        <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                        <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70"
+                                    <li th:each="cartItem : ${cart.items}">
+                                        <a href="#" class="remove d-none" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                        <a class="cart-img" href="#"><img th:src="${cartItem.product.thumbnail.url}"
                                                                           alt="#"></a>
-                                        <h4><a href="#">Woman Ring</a></h4>
-                                        <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                        <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70"
-                                                                          alt="#"></a>
-                                        <h4><a href="#">Woman Necklace</a></h4>
-                                        <p class="quantity">1x - <span class="amount">$35.00</span></p>
+                                        <h4><a th:href="@{/product/{alias}(alias=${cartItem.product.name})}" th:text="${cartItem.product.name}">Woman Ring</a></h4>
+                                        <p class="quantity" ><span th:text="${cartItem.quantity} + 'x - '"></span> <span th:text="${#numbers.formatCurrency(cartItem.product.getDropPrice())}" class="amount">$99.00</span></p>
                                     </li>
                                 </ul>
                                 <div class="bottom">
                                     <div class="total">
                                         <span>Total</span>
-                                        <span class="total-amount">$134.00</span>
+                                        <span class="total-amount" th:text="${#numbers.formatCurrency(cart.total)}">$134.00</span>
                                     </div>
-                                    <a href="checkout.html" class="btn animate">Checkout</a>
+                                    <a href="/payment" class="btn animate">Thanh toán</a>
                                 </div>
                             </div>
                             <!--/ End Shopping Item -->

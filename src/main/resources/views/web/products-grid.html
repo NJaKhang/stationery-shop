@@ -202,14 +202,16 @@
                                     <div class="button-head">
                                         <div class="product-action">
                                             <a data-toggle="modal" data-target="#exampleModal" title="Quick View"
-                                               href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                               href="#" class="d-none"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                             <a title="Wishlist" href="#"><i
                                                     class=" ti-heart "></i><span>Thêm vào yêu thích</span></a>
-                                            <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                            <a title="Compare" href="#" class="d-none"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                         </div>
-                                        <div class="product-action-2">
-                                            <a title="Add to cart" href="#">Thêm vào giỏ hàng</a>
-                                        </div>
+                                        <form class="product-action-2" action="/cart" method="post">
+                                            <input class="d-none" name="productId" th:value="${product.id}">
+                                            <input class="d-none" name="quantity" value="1">
+                                            <button style="border: none !important;" type="submit" title="Add to cart" href="#">Thêm vào giỏ hàng</button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="product-content">
@@ -223,8 +225,10 @@
                                     <div class="product-price">
                                         <span th:if="(${product.discount > 0})"
                                               th:text="${#numbers.formatCurrency(product.price - product.discount)}">-</span>
-                                        <s th:class="text-danger"
+                                        <s th:if="(${product.discount > 0})" th:class="text-danger"
                                            th:text="${#numbers.formatCurrency(product.price)}">-</s>
+                                        <span th:if="(${product.discount == 0})"
+                                              th:text="${#numbers.formatCurrency(product.price)}">-</span>
                                     </div>
                                 </div>
                             </div>
