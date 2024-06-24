@@ -14,4 +14,5 @@ public interface CartService {
 
     void remove(Long productId);
 
+    void set(Long aLong, Integer integer);
 }

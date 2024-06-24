@@ -50,4 +50,11 @@ public class CartServiceImpl implements CartService {
     public void remove(Long productId) {
 
     }
+
+    @Override
+    public void set(Long aLong, Integer integer) {
+
+            CartItem cartItem = cartItems.stream().filter(cartItem1 -> cartItem1.getProduct().getId().equals(aLong)).findFirst().get();
+            cartItem.setQuantity(integer);
+    }
 }

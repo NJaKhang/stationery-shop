@@ -14,4 +14,8 @@ import java.util.List;
 public class Cart {
     private List<CartItem> items;
     private double total;
+
+    public double getTotalWithShip() {
+        return total + 45000.0;
+    }
 }
