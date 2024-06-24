@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="/web/layout/layout::layout('Trang chủ', ~{::#content}, true)">
+      th:replace="/web/layout/layout::layout(${title}, ~{::#content}, true)">
 <body>
 <section id="content">
     <!-- Slider Area -->
