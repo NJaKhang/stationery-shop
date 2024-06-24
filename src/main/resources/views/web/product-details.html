@@ -42,7 +42,7 @@
                                         <s th:class="text-danger"
                                            th:text="${#numbers.formatCurrency(product.price)}">-</s>
                                     </div>
-                                    <p class="description">eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in</p>
+                                    <p class="description" th:text="${product.shortDescription}">eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in</p>
                                 </div>
                                 <!--/ End Description -->
                                 <div class="product-buy">
