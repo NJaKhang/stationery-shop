@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="/admin/layout/admin-layout::admin-layout('Products Manager', ~{::#content}, ~{::script})">
+      th:replace="/admin/layout/admin-layout::admin-layout('Product form', ~{::#content}, ~{::script})">
 <body>
 <main id="content">
     <div class="container p-4">
@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Products</li>
+                    <li class="breadcrumb-item active" aria-current="page">Orders</li>
                 </ol>
             </nav>
         </section>
@@ -26,17 +26,13 @@
                     <div class="card shadow-0 shadow-0 p-2 rounded-1">
                         <div class="card-body p-2 d-flex justify-content-between">
                             <div>
-                                <a th:href="@{/admin/products/form}" class="btn btn-primary shadow-1">
-                                    <i class="fa-regular fa-plus me-2"></i>
-                                    Create
-                                </a>
                                 <a th:href="@{/admin/products/form}" class="btn btn-outline-primary shadow-1">
                                     <i class="fa-regular fa-file-import me-2"></i> Import
                                 </a>
                             </div>
                             <div>
                                 <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Search" id="table-search"/>
+                                    <input class="form-control" placeholder="Search"/>
                                     <button class="btn btn-outline-secondary" type="button" data-mdb-ripple-init
                                             data-mdb-ripple-color="dark">
                                         <i class="fa-regular fa-search me-2"></i>
@@ -87,19 +83,28 @@
 <script th:src="@{/static/js/datatables.min.js}"></script>
 <script th:fragment="script">
     const status = {
-        "AVAILABLE": '<span class="badge badge-success">[[#{product.status.AVAILABLE}]]</span>',
-        "OUT_STOCK": '<span class="badge badge-warning">[[#{product.status.OUT_STOCK}]]</span>',
-        "COMING_SOON": '<span class="badge badge-info">[[#{product.status.COMING_SOON}]]</span>',
+        "DONE": '<span class="badge badge-success">[[#{order.status.DONE}]]</span>',
+        "WAIT": '<span class="badge badge-warning">[[#{order.status.WAIT}]]</span>',
+        "CANCELED": '<span class="badge badge-danger">[[#{order.status.CANCELED}]]</span>',
+        "RETURN": '<span class="badge badge-danger">[[#{order.status.RETURN}]]</span>',
+        "SHIPPING": '<span class="badge badge-info">[[#{order.status.SHIPPING}]]</span>',
+    }
+
+    const paymentStatus = {
+        "DONE": '<span class="badge badge-success">[[#{payment.status.DONE}]]</span>',
+        "WAITING": '<span class="badge badge-warning">[[#{payment.status.WAIT}]]</span>',
+        "ERROR": '<span class="badge badge-danger">[[#{payment.status.ERRO}]]</span>'
     }
 
     let table = new DataTable('#table', {
         serverSide: true,
+        searching: false,
         ordering: true,
         select: true,
         lengthChange: false,
         info: false,
         ajax: {
-            url: '/api/v1/products',
+            url: '/api/v1/orders',
             contentType: 'application/json',
             type: 'POST',
             data: function (d) {
@@ -110,50 +115,50 @@
         },
         columns: [
             {
-                name: "id",
-                title: "ID",
-                width: "5%",
+                name: "code",
+                title: "Code",
                 render: function (data, type, row, meta) {
-                    return row.id
+                    return row.code;
                 }
 
             },
             {
-                name: "image",
-                title: "Image",
-                width: "10%",
-                orderable: false,
+                name: "orderBy.fullName",
+                title: "Order By",
                 render: (data, type, row, meta) => {
-                    return `<img src="${row.thumbnail}" class="w-100"/>`
+                    return row.customerName;
                 }
             },
-
             {
-                name: "name",
-                title: "Name",
-                width: "25%",
-                render: function (data, type, row, meta) {
-                    return row.name;
+                name: "quantity",
+                title: "Quantity",
+                render: (data, type, row, meta) => {
+                    return row.quantity
                 }
-
             },
             {
-                name: "price",
-                title: "Price",
-                width: "10%",
+                name: "total",
+                title: "Total",
                 render: function (data, type, row, meta) {
-                    if (row.discount === 0) {
-                        return currencyFormat.format(row.finalPrice)
+                    if (row.summary.totalDiscount === 0) {
+                        return currencyFormat.format(row.summary.total)
                     } else {
                         return `
                             <span>
-                                ${currencyFormat.format(row.finalPrice)}<br/>
-                                <s class="text-danger">${currencyFormat.format(row.price)}</s>
+                                ${currencyFormat.format(row.summary.total)}<br/>
+                                <s class="text-danger">${currencyFormat.format(row.summary.subtotal)}</s>
                             <span>`
                     }
                 }
+
             },
             {
+                name: "Payment",
+                title: "Payment",
+                render: function (data, type, row, meta) {
+                    return paymentStatus[row.paymentStatus]
+                }
+            }, {
                 name: "status",
                 title: "Status",
                 render: function (data, type, row, meta) {
@@ -161,33 +166,7 @@
                     return status[row.status];
                 }
 
-            },
-            {
-                name: "sku",
-                title: "SKU",
-                width: "5%",
-                render: function (data, type, row, meta) {
-
-                    return row.sku;
-                }
-            },
-            {
-                name: "record.stock",
-                title: "Quantity",
-                width: "3%",
-                render: function (data, type, row, meta) {
-                    return row.quantity
-                }
-            },
-            {
-                name: "record.sold",
-                title: "Sold",
-                width: "3%",
-                render: function (data, type, row, meta) {
-                    return row.sold
-                }
-            },
-            {
+            }, {
                 name: "action",
                 title: "Action",
                 orderable: false,
@@ -210,22 +189,6 @@
         }
 
     });
-
-    let delay
-
-    $('#table-search').on("input", function () {
-        clearTimeout(delay);
-        delay = setTimeout(function () {
-            table.search($(this).val()).draw();
-        }.bind(this), 800);
-    });
-
-    $('#table-search')[0].onsearch = function () {
-        clearTimeout(delay);
-        table.search($(this).val()).draw();
-    };
-
-
     const element = document.querySelector('#confirmDelete');
     const confirmModal = new mdb.Modal(element)
     let id

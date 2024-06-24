@@ -1,7 +1,7 @@
 spring:
     datasource:
         password: M&24GJ8.}ray
-        url: jdbc:mysql://192.168.88.191/stationery_shop?useSSL=false&allowPublicKeyRetrieval=true
+        url: jdbc:mysql://192.168.7.182/stationery_shop?useSSL=false&allowPublicKeyRetrieval=true
         username: sshop
     jpa:
         database-platform: org.hibernate.dialect.MySQLDialect

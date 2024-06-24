@@ -1,6 +1,7 @@
 package com.group.sshop.models.entities;
 
 import com.group.sshop.models.domain.Summary;
+import com.group.sshop.models.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,9 @@ import java.util.List;
 @Setter
 @Getter
 public class Order extends AbstractEntity {
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetails> orderDetails = new ArrayList<>();
@@ -32,7 +36,10 @@ public class Order extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User orderBy;
 
-    private Summary getSummary() {
+    private String code;
+
+
+    public Summary getSummary() {
         var subtotal = getSubtotal();
         var productDiscount = getProductDiscount();
         var voucherDiscount = getVoucherDiscount();

@@ -39,5 +39,5 @@ public class ProductForm {
 
     @NotBlank
     private String sku;
-
+    private String shortDescription;
 }
