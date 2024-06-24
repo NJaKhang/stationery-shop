@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/admin/product-categories")
-public class CategoryController {
+public class AdminCategoryController {
     private final CategoryService categoryService;
 
     @GetMapping

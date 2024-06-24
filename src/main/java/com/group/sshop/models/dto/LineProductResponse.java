@@ -28,7 +28,7 @@ public class LineProductResponse {
         return LineProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .sold(product.getRecord().getSale())
+                .sold(product.getRecord().getSold())
                 .price(product.getPrice())
                 .discount(product.getDiscount())
                 .finalPrice(product.getPrice() - product.getDiscount())

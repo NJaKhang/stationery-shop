@@ -32,8 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setAlias(categoryForm.getAlias());
         category.setImage(image);
         categoryRepository.save(category);
-    private final CategoryRepository categoryRepository;
-
+    }
     @Override
     public List<Category> findCategories() {
         return categoryRepository.findAll();
