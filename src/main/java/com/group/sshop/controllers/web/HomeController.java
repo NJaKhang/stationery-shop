@@ -10,6 +10,7 @@ public class HomeController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("web/home");
+        modelAndView.addObject("title", "Trang chủ");
         return modelAndView;
     }
 }

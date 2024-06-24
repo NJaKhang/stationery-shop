@@ -18,6 +18,8 @@ public class Product extends AbstractEntity {
     private String name;
     @Column(columnDefinition = "Text")
     private String description;
+    @Column(columnDefinition = "Text")
+    private String shortDescription;
     @Column(unique = true)
     private String alias;
     @Column(unique = true)

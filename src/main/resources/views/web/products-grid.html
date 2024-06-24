@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="/web/layout/layout::layout('Sản phẩm', ~{::#content}, false)">
+      th:replace="/web/layout/layout::layout(${title}, ~{::#content}, false)">
 <body>
 <section id="content">
     <!-- Breadcrumbs -->
@@ -30,15 +30,16 @@
                         <div class="single-widget category">
                             <h3 class="title">Danh Mục</h3>
                             <ul class="categor-list">
-                                <li th:each="category: ${categories}"><a href="#"
-                                                                         th:text="${category.name}">-</a></li>
+                                <li th:each="category: ${categories}"><a
+                                        th:href="@{/products/category/{category}(category=${category.alias})}"
+                                        th:text="${category.name}">-</a></li>
                             </ul>
                         </div>
                         <!--/ End Single Widget -->
                         <!-- Shop By Price -->
-                        <div class="single-widget range">
+                        <div class="single-widget range d-none">
                             <h3 class="title">Mua Theo Giá</h3>
-                            <div class="price-filter">
+                            <div class="price-filter d-none">
                                 <div class="price-filter-inner">
                                     <div id="slider-range"></div>
                                     <div class="price_slider_amount">
@@ -51,26 +52,26 @@
                             </div>
                             <ul class="check-box-list">
                                 <li>
-                                    <label class="checkbox-inline" for="1"><input name="news" id="0" type="checkbox">0đ
+                                    <label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">0đ
                                         -
                                         20.000đ<span class="count">(3)</span></label>
                                 </li>
                                 <li>
-                                    <label class="checkbox-inline" for="1"><input name="news" id="9" type="checkbox">0đ
+                                    <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">20.000đ
                                         -
                                         50.000đ<span class="count">(3)</span></label>
                                 </li>
                                 <li>
-                                    <label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">0đ
+                                    <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">50.000đ
                                         -
                                         100.000đ<span class="count">(3)</span></label>
                                 </li>
                                 <li>
-                                    <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">100.000đ
+                                    <label class="checkbox-inline" for="4"><input name="news" id="4" type="checkbox">100.000đ
                                         - 500.000đ<span class="count">(5)</span></label>
                                 </li>
                                 <li>
-                                    <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">500.000đ
+                                    <label class="checkbox-inline" for="5"><input name="news" id="5" type="checkbox">500.000đ
                                         - 1.000.000đ<span class="count">(8)</span></label>
                                 </li>
                             </ul>
@@ -214,7 +215,8 @@
                                 <div class="product-content">
                                     <div class="product-name-wrapper">
                                         <h3 class="product-name"><a th:text="${product.name}"
-                                                                    th:href="@{/products/{alias}(alias=${product.alias})}" data-toggle="tooltip"
+                                                                    th:href="@{/products/{alias}(alias=${product.alias})}"
+                                                                    data-toggle="tooltip"
                                                                     th:title="${product.name}">Women Hot Collection</a>
                                         </h3>
                                     </div>
