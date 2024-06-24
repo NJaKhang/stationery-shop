@@ -117,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
         product.setName(productForm.getName());
         product.setTags(tags);
         product.setPrice(productForm.getPrice());
-        product.setShortDescription(product.getShortDescription());
+        product.setShortDescription(productForm.getShortDescription());
         productRepository.save(product);
 
     }
