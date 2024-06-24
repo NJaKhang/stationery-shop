@@ -1,8 +1,13 @@
 const sidenav = document.getElementById("main-sidenav");
+
 const sidenavInstance = mdb.Sidenav.getInstance(sidenav);
+
+const currencyFormat = Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'})
 
 
 let innerWidth = null;
+
+//
 
 const setMode = (e) => {
     // Check necessary for Android devices
@@ -28,8 +33,8 @@ window.addEventListener("resize", setMode);
 
 const searchFocus = document.getElementById('search-focus');
 const keys = [
-    { keyCode: 'AltLeft', isTriggered: false },
-    { keyCode: 'ControlLeft', isTriggered: false },
+    {keyCode: 'AltLeft', isTriggered: false},
+    {keyCode: 'ControlLeft', isTriggered: false},
 ];
 
 window.addEventListener('keydown', (e) => {
@@ -53,3 +58,4 @@ window.addEventListener('keyup', (e) => {
         }
     });
 });
+

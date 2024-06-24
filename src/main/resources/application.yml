@@ -6,10 +6,16 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.MySQLDialect
         hibernate:
-            ddl-auto: none
+            ddl-auto: update
         sql-format: true
         show-sql: true
-
+    data:
+        web:
+            pageable:
+                one-indexed-parameters: true
+server:
+    error:
+        path: /error
 
 storage:
     root: 'D:\Workspace\JavaScript\ReactJs\stationery-shop\storage'

@@ -75,6 +75,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return (email) -> {
+            System.out.println(email);
             User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user not found"));
             System.out.println(user);
             return Principal.create(user);

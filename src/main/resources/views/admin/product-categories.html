@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/admin/layout/admin-layout::admin-layout('Product form', ~{::#content}, ~{::script})">
+<body>
+<section>
+    <main class="py-4" id="content">
+        <!-- Container for demo purpose -->
+        <div class="container p-4">
+
+            <!-- Section: Sales Performance KPIs -->
+            <section class="mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </section>
+            <!-- Section: Sales Performance KPIs -->
+
+            <!--Section: Shopping Funnel & Product revenue-->
+            <section class="mb-4">
+                <div class="row gx-xl-5">
+                    <div class="col-md-5 mb-4">
+                        <div class="card shadow-0 h-100 rounded-1">
+                            <div class="card-header">
+                                Category
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-light">
+                                    <li class="list-group-item" th:each="category:${categories} "
+                                        th:text="${category.name}">An item
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 mb-4">
+                        <div class="card shadow-0 rounded-1">
+                            <div class="card-header">
+                                Form
+                            </div>
+                            <div class="card-body">
+                                <form method="post" th:action="@{/admin/product-categories}" th:object="${categoryForm}">
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label class="form-label mb-1">
+                                                Name
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text"
+                                                   name="name"
+                                                   class="form-control form-outline"
+                                                   placeholder="Name"/>
+                                        </div>
+
+                                        <div class="invalid-feedback"
+                                             th:if="${#fields.hasErrors('name')}"
+                                             th:errors="*{name}"></div>
+                                    </div>
+
+                                    <!-- Text inpt -->
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label class="form-label mb-1">
+                                                Alias
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text"
+                                                   name="alias"
+                                                   class="form-control form-outline"
+                                                   placeholder="Alias"/>
+                                        </div>
+
+                                        <div class="invalid-feedback"
+                                             th:if="${#fields.hasErrors('alias')}"
+                                             th:errors="*{alias}"></div>
+                                    </div>
+
+                                    <!-- Number input -->
+                                    <div class="mb-4">
+                                        <div class="form-group">
+                                            <label class="form-label mb-1">
+                                                Image
+                                                <span class="text-danger">*</span>
+                                            </label>
+
+                                            <input type="text"
+                                                   name="imageUrl"
+                                                   class="form-control form-outline"
+                                                   placeholder="imageUrl"/>
+                                        </div>
+
+                                        <div class="invalid-feedback"
+                                             th:if="${#fields.hasErrors('imageUrl')}"
+                                             th:errors="*{imageUrl}"></div>
+                                    </div>
+
+                                    <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">
+                                        Save
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Section: Shopping Funnel & Product revenue-->
+
+
+        </div>
+        <!-- Container for demo purpose -->
+    </main>
+    <!--Main layout-->
+</section>
+
+<script th:fragment="script">
+
+</script>
+</body>
+
+</html>

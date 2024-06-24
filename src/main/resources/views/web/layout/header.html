@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <!-- Header -->
 <header class="header shop" th:fragment="header(showCategories)">
     <!-- Topbar -->
@@ -22,8 +24,9 @@
                         <ul class="list-main">
                             <li><i class="ti-location-pin"></i> Store location</li>
                             <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-                            <li><i class="ti-user"></i> <a href="#">My account</a></li>
-                            <li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+                            <li sec:authorize="isAuthenticated()"><i class="ti-user"></i> <a href="/account" th:text="${#authentication.principal.fullName}">My account</a></li>
+                            <li sec:authorize="isAnonymous()" ><i class="ti-power-off"></i><a href="/login" th:text="#{page.login}">Login</a></li>
+                            <li sec:authorize="isAuthenticated()" ><i class="ti-power-off"></i><a href="/logout" th:text="#{page.logout}">Login</a></li>
                         </ul>
                     </div>
                     <!-- End Top Right -->

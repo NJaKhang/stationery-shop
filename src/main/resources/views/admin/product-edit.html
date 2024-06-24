@@ -22,7 +22,7 @@
         <section class="mb-4">
 
             <!--/*@thymesVar id="productForm" type="com.group.sshop.models.dto.ProductForm"*/-->
-            <form method="post" th:action="@{/admin/products}" class="row " th:object="${productForm}">
+            <form method="post" th:action="@{'/admin/products/edit/' + ${id}}" class="row " th:object="${productForm}">
                 <div class="col-md-8 mb-4">
                     <div class="card rounded-1 shadow-0 rounded-1  mb-4">
                         <div class="card-header">
