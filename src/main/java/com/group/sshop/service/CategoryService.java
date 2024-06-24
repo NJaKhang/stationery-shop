@@ -10,4 +10,6 @@ public interface CategoryService {
     List<Category> findAll();
 
     void create(CategoryForm categoryForm);
+
+    List<Category> findCategories();
 }

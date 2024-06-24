@@ -9,6 +9,7 @@ import com.group.sshop.models.entities.*;
 import com.group.sshop.repository.*;
 import com.group.sshop.service.ProductService;
 import lombok.AllArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -121,6 +122,11 @@ public class ProductServiceImpl implements ProductService {
         Product product = findById(id);
         product.setDeleted(true);
         productRepository.save(product);
+    }
+      @Override
+    public Page<Product> findPage(Pageable pageable) {
+        System.out.println(pageable);
+        return productRepository.findAll(pageable);
     }
 
 

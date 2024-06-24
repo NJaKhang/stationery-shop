@@ -24,4 +24,7 @@ public interface ProductService {
     void update(Long id, ProductForm productForm);
 
     void deleted(Long id);
+  
+     Page<Product> findPage(Pageable pageable);
+
 }

@@ -19,6 +19,6 @@ public class ProductRecord {
     @JoinColumn(name = "id")
     private Product product;
 
-    private int sale;
+    private int sold;
     private int stock;
 }
