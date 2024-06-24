@@ -7,6 +7,7 @@ import com.group.sshop.models.dto.datatable.DataTableResponse;
 import com.group.sshop.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,5 +21,10 @@ public class ProductApi {
     private DataTableResponse<LineProductResponse> findAll(@RequestBody DataTableRequest dataTableRequest){
         System.out.println(dataTableRequest);
         return productService.findAll(dataTableRequest);
+    }
+    @DeleteMapping("/{id}")
+    private ResponseEntity<?> delete(@PathVariable Long id){
+        productService.deleted(id);
+        return ResponseEntity.noContent().build();
     }
 }

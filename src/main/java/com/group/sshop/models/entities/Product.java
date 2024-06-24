@@ -56,4 +56,8 @@ public class Product extends AbstractEntity {
     @PrimaryKeyJoinColumn
     private ProductRecord record;
 
+    public Double getDropPrice(){
+        return price - discount;
+    }
+
 }

@@ -22,4 +22,6 @@ public interface ProductService {
     Product findById(Long id);
 
     void update(Long id, ProductForm productForm);
+
+    void deleted(Long id);
 }

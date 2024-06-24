@@ -94,4 +94,10 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable Long id){
+        productService.deleted(id);
+        return new ModelAndView("redirect:/admin/products");
+    }
+
 }
