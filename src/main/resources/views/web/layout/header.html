@@ -68,8 +68,8 @@
                 <div class="col-lg-8 col-md-7 col-12">
                     <div class="search-bar-top">
                         <div  class="search-bar">
-                            <select >
-                                <option selected="selected">Danh Mục</option>
+                            <select>
+                                <option th:each="category : ${globalCategories}" selected="selected" th:value="${category}"><a th:text="${category.name}"> DanhMục</a></option>
                             </select>
                             <form>
                                 <input name="search" placeholder="Search Products Here....." type="search">

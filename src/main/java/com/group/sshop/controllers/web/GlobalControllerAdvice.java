@@ -12,8 +12,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GlobalControllerAdvice {
     private final CategoryService categoryService;
-//    @ModelAttribute("globalCategories")
-//    public List<Category> globalCategories(){
-//        return categoryService.findCategories();
-//    }
+
+    @ModelAttribute("globalCategories")
+    public List<Category> globalCategories() {
+        return categoryService.findCategories();
+    }
 }
