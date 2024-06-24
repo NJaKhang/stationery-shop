@@ -3,8 +3,9 @@ package com.group.sshop.config;
 import com.group.sshop.models.domain.Principal;
 import com.group.sshop.models.entities.User;
 import com.group.sshop.repository.UserRepository;
-import com.group.sshop.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,16 +16,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
 
 
     @Bean
@@ -32,22 +36,25 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> registry
-                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                                .requestMatchers("/staff/**").hasAuthority("STAFF")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/staff/**").hasAuthority("STAFF")
+                        .anyRequest().permitAll())
+                .formLogin(configurer -> configurer
+                        .loginProcessingUrl("/process-login")
+                        .loginPage("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .successHandler(new LoginSuccessHandler())
+                        .permitAll()
+                        .failureHandler(new LoginFailureHandler())
+                        .permitAll())
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/staff/**").hasAuthority("STAFF")
                         .anyRequest().permitAll()
-                ).formLogin(configurer -> configurer
-                                .loginProcessingUrl("/process-login")
-                                .loginPage("/login")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                                .successHandler(new LoginSuccessHandler())
-                                .permitAll()
-                                .failureUrl("/login?error=true")
-                                .permitAll())
-                .logout(configurer -> configurer.logoutUrl("/logout")
-                                .logoutSuccessUrl("/")
-                                .deleteCookies("JSESSIONID")
-                                .permitAll())
+                ).logout(configurer -> configurer.logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID")
+                        .permitAll())
                 .exceptionHandling(configurer -> configurer.accessDeniedPage("/access-denied"))
                 .authenticationProvider(authenticationProvider(userRepository));
 
@@ -71,10 +78,14 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return (email) -> {
+            System.out.println(email);
             User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+            System.out.println(user);
             return Principal.create(user);
         };
-    };
+    }
+
+    ;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

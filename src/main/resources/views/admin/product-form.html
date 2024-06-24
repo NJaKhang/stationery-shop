@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/admin/layout/admin-layout::admin-layout('Edit product', ~{::#content}, ~{::script})">
+<body>
+<main id="content">
+    <!-- Container for demo purpose -->
+    <div class="container p-4">
+
+        <!-- Section: Sales Performance KPIs -->
+        <section class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/products">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Form</li>
+                </ol>
+            </nav>
+        </section>
+        <!-- Section: Sales Performance KPIs -->
+
+        <!--Section: Shopping Funnel & Product revenue-->
+        <section class="mb-4">
+
+            <!--/*@thymesVar id="productForm" type="com.group.sshop.models.dto.ProductForm"*/-->
+            <form method="post" th:action="@{/admin/products}" class="row " th:object="${productForm}">
+                <div class="col-md-8 mb-4">
+                    <div class="card rounded-1 shadow-0 rounded-1  mb-4">
+                        <div class="card-header">
+                            Information
+                        </div>
+                        <div class="card-body">
+                            <!-- Text input -->
+                            <div class="mb-3">
+                                <div class="form-group mb-4">
+                                    <label class="form-label mb-1">
+                                        Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           name="name"
+                                           class="form-control form-outline"
+                                           placeholder="Name"
+                                           th:value="${productForm.name}"/>
+                                </div>
+
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('name')}"
+                                     th:errors="*{name}"></div>
+                            </div>
+
+                            <!-- Text inpt -->
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label class="form-label mb-1">
+                                        Alias
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text"
+                                           name="alias"
+                                           class="form-control form-outline"
+                                           placeholder="Alias"
+                                           th:value="${productForm.alias}"/>
+                                </div>
+
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('alias')}"
+                                     th:errors="*{alias}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group mb-4">
+                                    <label class="form-label mb-1">SKU <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" name="sku" class="form-control form-outline"
+                                           placeholder="Alias" th:value="${productForm.sku}"/>
+                                </div>
+
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('sku')}"
+                                     th:errors="*{sku}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div>
+                                    <label class="form-label">
+                                        Producer
+                                    </label>
+
+                                    <select data-mdb-filter="true"
+                                            data-mdb-select-init
+                                            name="producer"
+                                            data-mdb-placeholder="Producer">
+                                        <option th:each="producer: ${producers}"
+                                                th:value="${producer.id}"
+                                                th:text="${producer.name}">
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="form-outline">
+                                <label class="form-label">Description</label>
+                                <div id="editor" style="height: 240px">
+                                </div>
+                                <input name="description" hidden>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card rounded-1 shadow-0 shadow-0 mb-4">
+                        <div class="card-header">
+                            Price
+                        </div>
+                        <div class="card-body">
+                            <label class="form-label">Price</label>
+                            <div class="input-group mb-3">
+                                <input
+                                        th:value="${productForm.price}"
+                                        name="price"
+                                        type="number"
+                                        class="form-control mb-1"
+                                        aria-label="Amount (to the nearest dollar)"
+                                        placeholder="price"
+                                />
+                                <span class="input-group-text">đ</span>
+                            </div>
+
+                            <label class="form-label mb-1">Cost <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input type="number"
+                                       th:value="${productForm.cost}"
+                                       name="cost"
+                                       class="form-control" placeholder="cost" min="0"/>
+                                <span class="input-group-text">đ</span>
+                            </div>
+                            <label class="form-label mb-1">Discount <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input
+                                        th:value="${productForm.discount}"
+                                        placeholder="Discount"
+                                        type="number"
+                                        name="discount"
+                                        class="form-control"
+                                        aria-label="Amount (to the nearest dollar)"
+                                />
+                                <span class="input-group-text">d</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card rounded-1 shadow-0 shadow-0 mb-4">
+                        <div class="card-header">
+                            Action
+                        </div>
+                        <div class="card-body">
+                            <!-- Submit button -->
+                            <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Save
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card rounded-1 shadow-0 shadow-0 mb-4">
+                        <div class="card-header">
+                            Thumbnail <span class="text-danger">*</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <img class="w-100"
+                                     id="img-reiview"
+                                     th:src="${productForm.imageUrl}"
+                                     alt=""/>
+                            </div>
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="text" name="imageUrl" id="form6Example6" class="form-control" th:value="${productForm.imageUrl}"/>
+                                <label class="form-label" for="form6Example6">Image Url</label>
+
+                            </div>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{imageUrl}"></div>
+
+                        </div>
+                    </div>
+                    <div class="card rounded-1 shadow-0 shadow-0 mb-4">
+                        <div class="card-header">
+                            Category and tag
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <select data-mdb-filter="true" data-mdb-select-init name="categoryId"
+                                        data-mdb-placeholder="Category">
+                                    <option selected disabled></option>
+                                    <option th:each="category: ${categories}"
+                                            th:value="${category.id}"
+                                            th:text="${category.name}"
+                                            th:selected="${category.id eq productForm.categoryId}"
+                                    >
+                                    </option>
+                                </select>
+                                <label class="form-label select-label">Category</label>
+
+                            </div>
+                            <div class="mb-4">
+                                <select data-mdb-filter="true" data-mdb-select-init name="tagIds"
+                                        data-mdb-placeholder="Tag" multiple>
+                                    <option
+                                            th:each="tag: ${tags}"
+                                            th:value="${tag.id}"
+                                            th:text="${tag.name}"
+                                            th:selected="${#lists.contains(productForm.tagIds, tag.id)}"
+                                    >
+                                    </option>
+                                </select>
+                                <label class="form-label select-label">Tag</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-1 shadow-0 shadow-0 mb-4">
+                        <div class="card-header">
+                            Status <span class="text-danger">*</span>
+                        </div>
+                        <div class="card-body">
+                            <select data-mdb-filter="true" data-mdb-select-init name="status"
+                                    data-mdb-placeholder="Status">
+                                <option th:each="status: ${T(com.group.sshop.models.enums.ProductStatus).values()}"
+                                        th:value="${status}"
+                                        th:text="#{ ${'product.status.' + status.toString()}}"
+                                        th:selected="${productForm.status.toString() == status.toString()}"
+                                >
+                                    Dollar
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div th:utext="${productForm.description}" id="temp">
+
+                </div>
+            </form>
+
+        </section>
+        <!--Section: Shopping Funnel & Product revenue-->
+
+
+    </div>
+    <!-- Container for demo purpose -->
+
+</main>
+<script th:fragment="script">
+    const quill = new Quill('#editor', {
+        modules: {
+            toolbar: [
+                [{header: [1, 2, false]}],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block'],
+            ],
+        },
+        placeholder: 'Compose an epic...',
+        theme: 'snow', // or 'bubble'
+    });
+
+    quill.on('text-change', (delta, oldDelta, source) => {
+        const input = document.querySelector('input[name="description"]');
+        input.value = quill.root.innerHTML
+    });
+
+    const imageInput = document.querySelector("input[name='imageUrl']");
+    const imageReview = document.querySelector('#img-reiview')
+
+    imageInput.onchange = (e) => {
+        if (e.target.value) {
+            console.log(e)
+            imageReview.src = e.target.value
+        } else {
+            imageReview.src = 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='
+        }
+    }
+
+    const temp = document.querySelector("#temp")
+    quill.root.innerHTML = temp.innerHTML
+    temp.innerHTML = ""
+    document.querySelector('input[name="description"]').value = quill.root.innerHTML
+
+
+
+
+
+</script>
+<!--Main layout-->
+</body>
+</html>

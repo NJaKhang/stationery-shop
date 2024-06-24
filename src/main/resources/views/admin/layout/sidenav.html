@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav id="main-sidenav" th:fragment="admin-sidenav(index)" data-mdb-sidenav-init class="sidenav sidenav-sm shadow-1" data-mdb-hidden="false" data-mdb-accordion="true">
     <a class="d-flex justify-content-center pt-4 pb-2" href="#!"  data-mdb-ripple-init data-mdb-ripple-color="primary">
-        <img id="MDB-logo" src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.webp"
+        <img id="MDB-logo" th:src="@{/static/images/logo.png}"
              alt="MDB Logo" draggable="false" />
     </a>
 
@@ -14,11 +14,7 @@
         </li>
 
         <li class="sidenav-item pt-3">
-            <span class="sidenav-subheading text-muted text-uppercase fw-bold">Create</span>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-plus fa-fw me-3"></i><span>Project</span></a>
+            <span class="sidenav-subheading text-muted text-uppercase fw-bold">Dashboard</span>
         </li>
         <li class="sidenav-item">
             <a class="sidenav-link" href="">
@@ -29,16 +25,16 @@
             <span class="sidenav-subheading text-muted text-uppercase fw-bold">Manage</span>
         </li>
         <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-cubes fa-fw me-3"></i><span>Projects</span></a>
+            <a class="sidenav-link" href="/admin/products">
+                <i class="fas fa-cubes fa-fw me-3"></i><span>Products</span></a>
         </li>
         <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-database fa-fw me-3"></i><span>Databases</span></a>
+            <a class="sidenav-link" href="/admin/product-categories">
+                <i class="fas fa-list-alt fa-fw me-3"></i><span>Category</span></a>
         </li>
         <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-stream fa-fw me-3"></i><span>Custom domains</span></a>
+            <a class="sidenav-link" href="/admin/product-tags">
+                <i class="fas fa-tag fa-fw me-3"></i><span>Tag</span></a>
         </li>
         <li class="sidenav-item">
             <a class="sidenav-link" href="">
@@ -47,56 +43,6 @@
         <li class="sidenav-item">
             <a class="sidenav-link" href="">
                 <i class="fas fa-users fa-fw me-3"></i><span>Team</span></a>
-        </li>
-
-
-        <li class="sidenav-item pt-3">
-            <span class="sidenav-subheading text-muted text-uppercase fw-bold">Maintain</span>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-chart-pie fa-fw me-3"></i><span>Analytics</span></a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-sync fa-fw me-3"></i><span>Backups</span></a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-shield-alt fa-fw me-3"></i><span>Security</span></a>
-        </li>
-
-
-        <li class="sidenav-item pt-3">
-            <span class="sidenav-subheading text-muted text-uppercase fw-bold">Admin</span>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-money-bill fa-fw me-3"></i><span>Billing</span></a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fas fa-file-contract fa-fw me-3"></i><span>License</span></a>
-        </li>
-
-        <li class="sidenav-item pt-3">
-            <span class="sidenav-subheading text-muted text-uppercase fw-bold">Tools</span>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link"><i class="fas fa-hand-pointer fa-fw me-3"></i>Drag & drop builder</a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link"><i class="fas fa-code fa-fw me-3"></i>Online code editor</a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link"><i class="fas fa-copy fa-fw me-3"></i>SFTP</a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link"><i class="fab fa-jenkins fa-fw me-3"></i>Jenkins</a>
-        </li>
-        <li class="sidenav-item">
-            <a class="sidenav-link" href="">
-                <i class="fab fa-gitlab fa-fw me-3"></i><span>GitLab</span></a>
         </li>
     </ul>
 </nav>

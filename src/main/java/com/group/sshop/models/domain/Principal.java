@@ -18,6 +18,7 @@ public class Principal implements UserDetails {
     private String email;
     private Boolean isVerified;
     private String fullName;
+    private String avatar;
     private String password;
     private UserStatus status;
     private Collection<? extends GrantedAuthority> authorities;
@@ -31,6 +32,7 @@ public class Principal implements UserDetails {
                 .status(user.getStatus())
                 .fullName(user.getFullName())
                 .isVerified(user.getVerifiedAt() != null)
+                .avatar(user.getAvatar().getUrl())
                 .build();
     }
 
@@ -66,6 +68,6 @@ public class Principal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !Objects.equals(status, UserStatus.ENABLED) && isVerified;
+        return Objects.equals(status, UserStatus.ENABLED);
     }
 }

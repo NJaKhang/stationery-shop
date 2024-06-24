@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/admin/layout/admin-layout::admin-layout('Product form', ~{::#content}, ~{::script})">
+<body>
+<main id="content">
+    <div class="container p-4">
+
+        <!-- Section: Sales Performance KPIs -->
+        <section class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Products</li>
+                </ol>
+            </nav>
+        </section>
+        <!-- Section: Sales Performance KPIs -->
+
+        <!--Section: Shopping Funnel & Product revenue-->
+        <section class="mb-4">
+
+            <!--/*@thymesVar id="productForm" type="com.group.sshop.models.dto.ProductForm"*/-->
+            <div class="row ">
+
+                <div class="col-md-12 mb-3">
+                    <div class="card shadow-0 shadow-0 p-2 rounded-1">
+                        <div class="card-body p-2 d-flex justify-content-between">
+                            <div>
+                                <a th:href="@{/admin/products/form}" class="btn btn-primary shadow-1">
+                                    <i class="fa-regular fa-plus me-2"></i>
+                                    Create
+                                </a>
+                                <a th:href="@{/admin/products/form}" class="btn btn-outline-primary shadow-1">
+                                    <i class="fa-regular fa-file-import me-2"></i> Import
+                                </a>
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Search"/>
+                                    <button class="btn btn-outline-secondary" type="button" data-mdb-ripple-init
+                                            data-mdb-ripple-color="dark">
+                                        <i class="fa-regular fa-search me-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="card shadow-0 shadow-0 mb-4 p-2 rounded-1">
+                        <div class="card-body p-2">
+                            <table class="table align-middle mb-0 bg-white" id="table">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!--Section: Shopping Funnel & Product revenue-->
+
+
+    </div>
+    <!-- Modal -->
+    <div class="modal" id="confirmDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+        <div class="modal-dialog  ">
+            <div class="modal-content modal-sm rounded-1 modal-dialog-centered">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script th:src="@{/static/js/datatables.min.js}"></script>
+<script th:fragment="script">
+    const status = {
+        "AVAILABLE": '<span class="badge badge-success">[[#{product.status.AVAILABLE}]]</span>',
+        "OUT_STOCK": '<span class="badge badge-warning">[[#{product.status.OUT_STOCK}]]</span>',
+        "COMING_SOON": '<span class="badge badge-info">[[#{product.status.COMING_SOON}]]</span>',
+    }
+
+    let table = new DataTable('#table', {
+        serverSide: true,
+        searching: false,
+        ordering: true,
+        select: true,
+        lengthChange: false,
+        info: false,
+        ajax: {
+            url: '/api/v1/products',
+            contentType: 'application/json',
+            type: 'POST',
+            data: function (d) {
+                return JSON.stringify(d);
+            }
+
+
+        },
+        columns: [
+            {
+                name: "id",
+                title: "ID",
+                width: "5%",
+                render: function (data, type, row, meta) {
+                    return row.id
+                }
+
+            },
+            {
+                name: "image",
+                title: "Image",
+                width: "10%",
+                orderable: false,
+                render: (data, type, row, meta) => {
+                    return `<img src="${row.thumbnail}" class="w-100"/>`
+                }
+            },
+
+            {
+                name: "name",
+                title: "Name",
+
+                render: function (data, type, row, meta) {
+                    return row.name;
+                }
+
+            },
+            {
+                name: "price",
+                title: "Price",
+                width: "10%",
+                render: function (data, type, row, meta) {
+                    if (row.discount === 0) {
+                        return currencyFormat.format(row.finalPrice)
+                    } else {
+                        return `
+                            <span>
+                                ${currencyFormat.format(row.finalPrice)}<br/>
+                                <s class="text-danger">${currencyFormat.format(row.price)}</s>
+                            <span>`
+                    }
+                }
+            },
+            {
+                name: "status",
+                title: "Status",
+                render: function (data, type, row, meta) {
+
+                    return status[row.status];
+                }
+
+            },
+            {
+                name: "sku",
+                title: "SKU",
+                width: "5%",
+                render: function (data, type, row, meta) {
+
+                    return row.sku;
+                }
+            },
+            {
+                name: "record.stock",
+                title: "Quantity",
+                width: "3%",
+                render: function (data, type, row, meta) {
+                    return row.quantity
+                }
+            },
+            {
+                name: "record.sold",
+                title: "Sold",
+                width: "3%",
+                render: function (data, type, row, meta) {
+                    return row.sold
+                }
+            },
+            {
+                name: "action",
+                title: "Action",
+                orderable: false,
+                render: (data, type, row) => {
+                    return `
+                        <span class="d-flex"><button class="btn btn-danger btn-floating shadow-1 me-1 btn-sm" onclick="showConfirmDelete()"><i class="fa fa-trash"></i></button><a class="btn btn-info btn-floating shadow-1 btn-sm" href="/admin/products/edit/${row.id}"><i class="fa fa-edit"></i></a></span>
+                    `
+                }
+
+            }
+        ],
+
+        language: {
+            paginate: {
+                next: '<i class="fa-regular fa-chevron-right"></i>',
+                previous: '<i class="fa-regular fa-chevron-left"></i>',
+                last: '<i class="fa-regular fa-angles-right"></i>',
+                first: '<i class="fa-regular fa-angles-left"></i>',
+            }
+        }
+
+    });
+    const element = document.querySelector('#confirmDelete');
+    const confirmModal = new mdb.Modal(element)
+
+    function showConfirmDelete(){
+        confirmModal.show()
+    }
+
+    function handleDelete(id){
+        $.ajax( {
+            url: "/api/v1/products/" + id,
+            method: "DELETE"
+        })
+    }
+
+
+
+
+</script>
+</body>
+
+</html>

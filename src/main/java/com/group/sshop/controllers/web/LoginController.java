@@ -30,9 +30,7 @@ public class LoginController {
 
     @PostMapping("/register")
     public ModelAndView handleRegister(@ModelAttribute @Valid RegisterFrom registerFrom, BindingResult bindingResult){
-        System.out.println(registerFrom);
         if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getModel());
             return new ModelAndView("web/register");
         } else {
             userService.registerNewUser(registerFrom);
@@ -40,4 +38,6 @@ public class LoginController {
 
         return new ModelAndView("redirect:/");
     }
+
+
 }
