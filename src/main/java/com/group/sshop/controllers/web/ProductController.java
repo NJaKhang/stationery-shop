@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ProductController {
     private final CategoryService categoryService;
 
     @GetMapping("/products")
-    public ModelAndView showProduct(Pageable pageable) {
+    public ModelAndView showProducts(Pageable pageable) {
         Page<Product> products = productService.findPage(pageable);
         List<Category> categories = categoryService.findCategories();
         StringJoiner joiner = new StringJoiner(",");
@@ -38,4 +39,14 @@ public class ProductController {
         modelAndView.addObject("sortParam", joiner.toString());
         return modelAndView;
     }
+
+    @GetMapping("/products/{alias}")
+    public ModelAndView showDetail(@PathVariable String alias){
+        ModelAndView productDetail = new ModelAndView("web/product-details");
+        Product product = productService.findByAlias(alias);
+        productDetail.addObject("product", product);
+
+        return productDetail;
+    }
+
 }
