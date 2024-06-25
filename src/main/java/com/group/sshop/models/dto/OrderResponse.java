@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import org.hibernate.Hibernate;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Data
 @Builder
 public class OrderResponse {
@@ -21,6 +24,7 @@ public class OrderResponse {
     private String email;
     private String code;
     private OrderStatus status;
+    private String orderDate;
 
     public static OrderResponse map(Order order){
         return OrderResponse.builder()
@@ -31,6 +35,7 @@ public class OrderResponse {
                 .summary(order.getSummary())
                 .status(order.getStatus())
                 .customerName(order.getOrderBy().getFullName())
+                .orderDate(new SimpleDateFormat("dd/MM/yyy").format(new Date(order.getCreatedAt().getTime())))
                 .email(order.getOrderBy().getEmail())
                 .paymentStatus(order.getPaymentDetails().getStatus())
                 .build();

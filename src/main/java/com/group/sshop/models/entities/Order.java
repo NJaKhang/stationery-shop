@@ -46,9 +46,10 @@ public class Order extends AbstractEntity {
         var shippingCost = getShippingCost();
         return Summary.builder()
                 .voucherDiscount(voucherDiscount)
-                .subtotal(subtotal)
+                .subtotal(subtotal + shippingCost)
                 .shippingCost(shippingCost)
                 .productDiscount(productDiscount)
+                .itemSubTotal(subtotal)
                 .totalDiscount(productDiscount + voucherDiscount)
                 .total(subtotal + shippingCost - productDiscount - voucherDiscount)
                 .voucherDescription(voucher != null ? voucher.getDescription() : null)
@@ -77,6 +78,10 @@ public class Order extends AbstractEntity {
 
     public double getProductDiscount() {
         return orderDetails.stream().map(OrderDetails::getDiscount).reduce(0d, Double::sum);
+    }
+
+    public int getQuantity(){
+        return orderDetails.stream().map(OrderDetails::getQuantity).reduce(0, Integer::sum);
     }
 
     public double getVoucherDiscount() {
