@@ -23,8 +23,27 @@ public class ProductController {
     private final CategoryService categoryService;
 
     @GetMapping("/products")
-    public ModelAndView showProduct(Pageable pageable) {
+    public ModelAndView showProducts(Pageable pageable) {
         Page<Product> products = productService.findPage(pageable);
+        List<Category> categories = categoryService.findCategories();
+        StringJoiner joiner = new StringJoiner(",");
+        products.getSort().get().forEach(order -> {
+            joiner.add(order.getProperty());
+            joiner.add(order.getDirection().toString());
+
+        });
+
+        ModelAndView modelAndView = new ModelAndView("web/products-grid");
+        modelAndView.addObject("title", "Sản phẩm");
+        modelAndView.addObject("categories", categories);
+        modelAndView.addObject("products", products);
+        modelAndView.addObject("sortParam", joiner.toString());
+        return modelAndView;
+    }
+
+    @GetMapping("/products/category/{category}")
+    public ModelAndView showProductsByCategory(Pageable pageable, @PathVariable String category) {
+        Page<Product> products = productService.findPageByCategory(pageable, category);
         List<Category> categories = categoryService.findCategories();
         StringJoiner joiner = new StringJoiner(",");
         products.getSort().get().forEach(order -> {
@@ -37,7 +56,19 @@ public class ProductController {
         modelAndView.addObject("categories", categories);
         modelAndView.addObject("products", products);
         modelAndView.addObject("sortParam", joiner.toString());
+        modelAndView.addObject("title", "Sản phẩm");
         return modelAndView;
+    }
+
+
+    @GetMapping("/products/{alias}")
+    public ModelAndView showDetail(@PathVariable String alias) {
+        ModelAndView productDetail = new ModelAndView("web/product-details");
+        Product product = productService.findByAlias(alias);
+        productDetail.addObject("title", product.getName());
+        productDetail.addObject("product", product);
+
+        return productDetail;
     }
 
 }

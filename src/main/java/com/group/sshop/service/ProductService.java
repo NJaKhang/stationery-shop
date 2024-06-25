@@ -21,10 +21,14 @@ public interface ProductService {
 
     Product findById(Long id);
 
+    Product findByAlias(String alias);
+
+
     void update(Long id, ProductForm productForm);
 
     void deleted(Long id);
   
      Page<Product> findPage(Pageable pageable);
 
+    Page<Product> findPageByCategory(Pageable pageable, String categoryAlias);
 }

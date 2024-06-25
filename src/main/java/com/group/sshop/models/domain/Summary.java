@@ -12,6 +12,7 @@ public class Summary {
     private double total;
     private double itemSubTotal;
     private double subtotal;
+    private double itemSubTotal;
     private double totalDiscount;
     private double productDiscount;
     private double voucherDiscount;

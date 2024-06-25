@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="/web/layout/layout::layout('Trang chủ', ~{::#content}, false)">
+<html lang="vn" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/web/layout/layout::layout(${title}, ~{::#content}, false)">
 <body>
 <section id="content">
     <!-- Breadcrumbs -->
@@ -28,40 +28,57 @@
                     <div class="shop-sidebar">
                         <!-- Single Widget -->
                         <div class="single-widget category">
-                            <h3 class="title">Categories</h3>
+                            <h3 class="title">Danh Mục</h3>
                             <ul class="categor-list">
-                                <li th:each="category: ${categories}"><a href="#" th:text="${category.name}">T-shirts</a></li>
+                                <li th:each="category: ${categories}"><a
+                                        th:href="@{/products/category/{category}(category=${category.alias})}"
+                                        th:text="${category.name}">-</a></li>
                             </ul>
                         </div>
                         <!--/ End Single Widget -->
                         <!-- Shop By Price -->
-                        <div class="single-widget range">
-                            <h3 class="title">Shop by Price</h3>
-                            <div class="price-filter">
+                        <div class="single-widget range d-none">
+                            <h3 class="title">Mua Theo Giá</h3>
+                            <div class="price-filter d-none">
                                 <div class="price-filter-inner">
                                     <div id="slider-range"></div>
                                     <div class="price_slider_amount">
                                         <div class="label-input">
-                                            <span>Range:</span><input type="text" id="amount" name="price" placeholder="Add Your Price"/>
+                                            <span>Range:</span><input type="text" id="amount" name="price"
+                                                                      placeholder="Add Your Price"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <ul class="check-box-list">
                                 <li>
-                                    <label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">$20 - $50<span class="count">(3)</span></label>
+                                    <label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">0đ
+                                        -
+                                        20.000đ<span class="count">(3)</span></label>
                                 </li>
                                 <li>
-                                    <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">$50 - $100<span class="count">(5)</span></label>
+                                    <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">20.000đ
+                                        -
+                                        50.000đ<span class="count">(3)</span></label>
                                 </li>
                                 <li>
-                                    <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">$100 - $250<span class="count">(8)</span></label>
+                                    <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">50.000đ
+                                        -
+                                        100.000đ<span class="count">(3)</span></label>
+                                </li>
+                                <li>
+                                    <label class="checkbox-inline" for="4"><input name="news" id="4" type="checkbox">100.000đ
+                                        - 500.000đ<span class="count">(5)</span></label>
+                                </li>
+                                <li>
+                                    <label class="checkbox-inline" for="5"><input name="news" id="5" type="checkbox">500.000đ
+                                        - 1.000.000đ<span class="count">(8)</span></label>
                                 </li>
                             </ul>
                         </div>
                         <!--/ End Shop By Price -->
                         <!-- Single Widget -->
-                        <div class="single-widget recent-post">
+                        <div class="single-widget recent-post d-none">
                             <h3 class="title">Recent post</h3>
                             <!-- Single Post -->
                             <div class="single-post first">
@@ -120,7 +137,7 @@
                         </div>
                         <!--/ End Single Widget -->
                         <!-- Single Widget -->
-                        <div class="single-widget category">
+                        <div class="single-widget category d-none">
                             <h3 class="title">Manufacturers</h3>
                             <ul class="categor-list">
                                 <li><a href="#">Forever</a></li>
@@ -139,7 +156,7 @@
                             <!-- Shop Top -->
                             <div class="shop-top">
                                 <div class="shop-shorter">
-                                    <div class="single-shorter">
+                                    <div class="single-shorter d-none">
                                         <label>Show :</label>
                                         <select>
                                             <option selected="selected">09</option>
@@ -151,14 +168,22 @@
                                     <div class="single-shorter">
                                         <label>Sort By :</label>
                                         <select onchange="location = this.value">
-                                            <option th:selected="${sortParam eq 'name,ASC'}" th:value="@{'/products?page=1&sort=name,asc'}"><a th:href="@{/products(page=1,sort=name,asc)}">Name a</a></option>
-                                            <option th:selected="${sortParam eq 'name,DESC'}" th:value="@{'/products?page=1&sort=name,desc'}"><a th:href="@{/products(page=1,sort=name,desc)}">Name d</a></option>
-                                            <option th:selected="${sortParam eq 'price,ASC'}" th:value="@{'/products?page=1&sort=price,asc'}"><a th:href="@{/products(page=1,sort=price,asc)}">Price a</a></option>
-                                            <option th:selected="${sortParam eq 'price,DESC'}" th:value="@{'/products?page=1&sort=price,desc'}"><a th:href="@{/products(page=1,sort=price,desc)}">Price d</a></option>
+                                            <option th:selected="${sortParam eq 'name,ASC'}"
+                                                    th:value="@{'/products?page=1&sort=name,asc'}"><a
+                                                    th:href="@{/products(page=1,sort=name,asc)}">Name a</a></option>
+                                            <option th:selected="${sortParam eq 'name,DESC'}"
+                                                    th:value="@{'/products?page=1&sort=name,desc'}"><a
+                                                    th:href="@{/products(page=1,sort=name,desc)}">Name d</a></option>
+                                            <option th:selected="${sortParam eq 'price,ASC'}"
+                                                    th:value="@{'/products?page=1&sort=price,asc'}"><a
+                                                    th:href="@{/products(page=1,sort=price,asc)}">Price a</a></option>
+                                            <option th:selected="${sortParam eq 'price,DESC'}"
+                                                    th:value="@{'/products?page=1&sort=price,desc'}"><a
+                                                    th:href="@{/products(page=1,sort=price,desc)}">Price d</a></option>
                                         </select>
                                     </div>
                                 </div>
-                                <ul class="view-mode">
+                                <ul class="view-mode d-none">
                                     <li class="active"><a href="shop-grid.html"><i class="fa fa-th-large"></i></a></li>
                                     <li><a href="shop-list.html"><i class="fa fa-th-list"></i></a></li>
                                 </ul>
@@ -167,36 +192,68 @@
                         </div>
                     </div>
                     <div class="row">
-                            <div th:each="product: ${products.content}" class="col-lg-4 col-md-6 col-12">
-                                <div class="single-product">
-                                    <div class="product-img">
-                                        <a href="product-details.html">
-                                            <img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-                                            <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                                        </a>
-                                        <div class="button-head">
-                                            <div class="product-action">
-                                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-                                            </div>
-                                            <div class="product-action-2">
-                                                <a title="Add to cart" href="#">Add to cart</a>
-                                            </div>
+                        <div th:each="product: ${products.content}" class="col-lg-4 col-md-6 col-12">
+                            <div class="single-product">
+                                <div class="product-img">
+                                    <a th:href="@{/products/{alias}(alias=${product.alias})}">
+                                        <img class="default-img" th:src="${product.thumbnail.url}" alt="#">
+                                        <img class="hover-img" th:src="${product.thumbnail.url}" alt="#">
+                                    </a>
+                                    <div class="button-head">
+                                        <div class="product-action">
+                                            <a data-toggle="modal" data-target="#exampleModal" title="Quick View"
+                                               href="#" class="d-none"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                            <a title="Wishlist" href="#"><i
+                                                    class=" ti-heart "></i><span>Thêm vào yêu thích</span></a>
+                                            <a title="Compare" href="#" class="d-none"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                         </div>
+                                        <form class="product-action-2" action="/cart" method="post">
+                                            <input class="d-none" name="productId" th:value="${product.id}">
+                                            <input class="d-none" name="quantity" value="1">
+                                            <button style="border: none !important;" type="submit" title="Add to cart" href="#">Thêm vào giỏ hàng</button>
+                                        </form>
                                     </div>
-                                    <div class="product-content">
-                                        <h3><a th:text="${product.name}" href="product-details.html">Women Hot Collection</a></h3>
-                                        <div class="product-price">
-                                            <span th:text="${product.price}">$29.00</span>
-                                        </div>
+                                </div>
+                                <div class="product-content">
+                                    <div class="product-name-wrapper">
+                                        <h3 class="product-name"><a th:text="${product.name}"
+                                                                    th:href="@{/products/{alias}(alias=${product.alias})}"
+                                                                    data-toggle="tooltip"
+                                                                    th:title="${product.name}">Women Hot Collection</a>
+                                        </h3>
+                                    </div>
+                                    <div class="product-price">
+                                        <span th:if="(${product.discount > 0})"
+                                              th:text="${#numbers.formatCurrency(product.price - product.discount)}">-</span>
+                                        <s th:if="(${product.discount > 0})" th:class="text-danger"
+                                           th:text="${#numbers.formatCurrency(product.price)}">-</s>
+                                        <span th:if="(${product.discount == 0})"
+                                              th:text="${#numbers.formatCurrency(product.price)}">-</span>
                                     </div>
                                 </div>
                             </div>
-
-                        </tr>
+                        </div>
 
                     </div>
+                    <div class="col-12">
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <ul class="pagination-list">
+                                <li th:disabled="${products.isFirst()}"><a
+                                        th:href="@{/products(page=${products.getNumber()},sort=${sortParam}, size=${products.size})}"><i
+                                        class="ti-arrow-left"></i></a></li>
+                                <li th:class="${products.getNumber() + 1 == page ? 'active' : ''}"
+                                    th:each="page: ${#numbers.sequence(1, products.getTotalPages())}"><a
+                                        th:href="@{/products(page=${page},sort=${sortParam}, size=${products.size})}"
+                                        th:text="${page}">3</a></li>
+                                <li th:disabled="${products.isLast()}"><a
+                                        th:href="@{/products(page=${products.getNumber() + 2},sort=${sortParam}, size=${products.size})}"><i
+                                        class="ti-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <!--/ End Pagination -->
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -206,11 +263,16 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:disabled="${products.isFirst()}">
-                <a class="page-link" th:href="@{/products(page=${products.getNumber()-1},sort=${sortParam}, size=${products.size})}">Previous</a>
+                <a class="page-link"
+                   th:href="@{/products(page=${products.getNumber()-1},sort=${sortParam}, size=${products.size})}">Previous</a>
             </li>
-            <li class="page-item" th:each="page: ${#numbers.sequence(1, products.getTotalPages())}"><a class="page-link" th:href="@{/products(page=${page},sort=${sortParam}, size=${products.size})}" th:text="${page}"></a></li>
+            <li class="page-item" th:each="page: ${#numbers.sequence(1, products.getTotalPages())}"><a class="page-link"
+                                                                                                       th:href="@{/products(page=${page},sort=${sortParam}, size=${products.size})}"
+                                                                                                       th:text="${page}"></a>
+            </li>
             <li class="page-item" th:disabled="${products.isLast()}">
-                <a class="page-link" th:href="@{/products(page=${products.getNumber()+1},sort=${sortParam}, size=${products.size})}">Next</a>
+                <a class="page-link"
+                   th:href="@{/products(page=${products.getNumber()+1},sort=${sortParam}, size=${products.size})}">Next</a>
             </li>
         </ul>
     </nav>
@@ -243,7 +305,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
+                                                                                                      aria-hidden="true"></span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="row no-gutters">
@@ -287,7 +351,9 @@
                                 </div>
                                 <h3>$29.00</h3>
                                 <div class="quickview-peragraph">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
+                                        ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
+                                        nemo ipsum numquam.</p>
                                 </div>
                                 <div class="size">
                                     <div class="row">
@@ -315,13 +381,16 @@
                                     <!-- Input Order -->
                                     <div class="input-group">
                                         <div class="button minus">
-                                            <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                            <button type="button" class="btn btn-primary btn-number" disabled="disabled"
+                                                    data-type="minus" data-field="quant[1]">
                                                 <i class="ti-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
+                                        <input type="text" name="quant[1]" class="input-number" data-min="1"
+                                               data-max="1000" value="1">
                                         <div class="button plus">
-                                            <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
+                                            <button type="button" class="btn btn-primary btn-number" data-type="plus"
+                                                    data-field="quant[1]">
                                                 <i class="ti-plus"></i>
                                             </button>
                                         </div>

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="/web/layout/layout::layout('Trang chủ', ~{::#content}, true)">
+      th:replace="/web/layout/layout::layout(${title}, ~{::#content}, false)">
 <body>
 <section id="content">
     <!-- Slider Area -->
     <section class="hero-slider">
         <!-- Single Slider -->
-        <div class="single-slider">
+        <div class="single-slider" style="background-image: url('https://cdn0.fahasa.com/media/magentothem/banner7/Summersale_0624_ldp_840x320_DealHot.jpg')">
             <div class="container">
                 <div class="row no-gutters">
                     <div class="col-lg-9 offset-lg-3 col-12">
                         <div class="text-inner">
                             <div class="row">
                                 <div class="col-lg-7 col-12">
-                                    <div class="hero-text">
-                                        <h1><span>UP TO 50% OFF </span>Shirt For Man</h1>
-                                        <p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find it
-                                            pereri <br> odiy maboriosm.</p>
+                                    <div class="hero-text d-none">
+                                        <h1><span>GIẢM ĐẾN 50% </span>Chia Sẻ Từ Trái Tim (Thích Pháp Hòa)</h1>
+                                        <p>Và còn nhiều mặt hàng khác <br> đang GIẢM GIÁ CỰC SỐC!!!</p>
                                         <div class="button">
-                                            <a href="#" class="btn">Shop Now!</a>
+                                            <a href="/products" class="btn">Mua ngay!</a>
                                         </div>
                                     </div>
                                 </div>
@@ -33,7 +32,7 @@
     <!--/ End Slider Area -->
 
     <!-- Start Small Banner  -->
-    <section class="small-banner section">
+    <section class="small-banner section d-none">
         <div class="container-fluid">
             <div class="row">
                 <!-- Single Banner  -->
@@ -83,7 +82,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Trending Item</h2>
+                        <h2>Danh mục nổi bật</h2>
                     </div>
                 </div>
             </div>
@@ -93,52 +92,72 @@
                         <div class="nav-main">
                             <!-- Tab Nav -->
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#man"
-                                                        role="tab">Man</a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#women"
-                                                        role="tab">Woman</a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#kids" role="tab">Kids</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#accessories" role="tab">Accessories</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#essential" role="tab">Essential</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#prices"
-                                                        role="tab">Prices</a></li>
+                                <li th:each="category: ${categories}" class="nav-item"><a class="nav-link active" data-toggle="tab" th:href="@{/products/category/{category}(category=${category.alias})}"
+                                                        role="tab" th:text="${category.name}">Man</a></li>
                             </ul>
                             <!--/ End Tab Nav -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Product Area -->
+
+    <div class="product-area section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Sản phẩm nổi bật</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-info">
                         <div class="tab-content" id="myTabContent">
                             <!-- Start Single Tab -->
                             <div class="tab-pane fade show active" id="man" role="tabpanel">
                                 <div class="tab-single">
                                     <div class="row">
-                                        <div class="col-xl-3 col-lg-4 col-md-4 col-12">
+                                        <div th:each="product: ${products.content}" class="col-xl-3 col-lg-4 col-md-4 col-12">
                                             <div class="single-product">
                                                 <div class="product-img">
-                                                    <a href="product-details.html">
-                                                        <img class="default-img" src="https://via.placeholder.com/550x750"
-                                                             alt="#">
-                                                        <img class="hover-img" src="https://via.placeholder.com/550x750"
-                                                             alt="#">
+                                                    <a th:href="@{/products/{alias}(alias=${product.alias})}">
+                                                        <img class="default-img" th:src="${product.thumbnail.url}" alt="#">
+                                                        <img class="hover-img" th:src="${product.thumbnail.url}" alt="#">
                                                     </a>
                                                     <div class="button-head">
                                                         <div class="product-action">
-                                                            <a data-toggle="modal" data-target="#exampleModal"
-                                                               title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                            <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                            <a title="Compare" href="#"><i
-                                                                    class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                                            <a data-toggle="modal" data-target="#exampleModal" title="Quick View"
+                                                               href="#" class="d-none"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                            <a title="Wishlist" href="#"><i
+                                                                    class=" ti-heart "></i><span>Thêm vào yêu thích</span></a>
+                                                            <a title="Compare" href="#" class="d-none"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                                         </div>
-                                                        <div class="product-action-2">
-                                                            <a title="Add to cart" href="#">Add to cart</a>
-                                                        </div>
+                                                        <form class="product-action-2" action="/cart" method="post">
+                                                            <input class="d-none" name="productId" th:value="${product.id}">
+                                                            <input class="d-none" name="quantity" value="1">
+                                                            <button style="border: none !important;" type="submit" title="Add to cart" href="#">Thêm vào giỏ hàng</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <div class="product-content">
-                                                    <h3><a href="product-details.html">Women Hot Collection</a></h3>
+                                                    <div class="product-name-wrapper">
+                                                        <h3 class="product-name"><a th:text="${product.name}"
+                                                                                    th:href="@{/products/{alias}(alias=${product.alias})}"
+                                                                                    data-toggle="tooltip"
+                                                                                    th:title="${product.name}">Women Hot Collection</a>
+                                                        </h3>
+                                                    </div>
                                                     <div class="product-price">
-                                                        <span>$29.00</span>
+                                        <span th:if="(${product.discount > 0})"
+                                              th:text="${#numbers.formatCurrency(product.price - product.discount)}">-</span>
+                                                        <s th:if="(${product.discount > 0})" th:class="text-danger"
+                                                           th:text="${#numbers.formatCurrency(product.price)}">-</s>
+                                                        <span th:if="(${product.discount == 0})"
+                                                              th:text="${#numbers.formatCurrency(product.price)}">-</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1627,10 +1646,9 @@
             </div>
         </div>
     </div>
-    <!-- End Product Area -->
 
     <!-- Start Midium Banner  -->
-    <section class="midium-banner">
+    <section class="midium-banner d-none">
         <div class="container">
             <div class="row">
                 <!-- Single Banner  -->
@@ -1663,7 +1681,7 @@
     <!-- End Midium Banner -->
 
     <!-- Start Most Popular -->
-    <div class="product-area most-popular section">
+    <div class="product-area most-popular section d-none">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -1798,7 +1816,7 @@
     <!-- End Most Popular Area -->
 
     <!-- Start Shop Home List  -->
-    <section class="shop-home-list section">
+    <section class="shop-home-list section d-none">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-12">
@@ -1996,7 +2014,7 @@
     <!-- End Shop Home List  -->
 
     <!-- Start Cowndown Area -->
-    <section class="cown-down">
+    <section class="cown-down d-none">
         <div class="section-inner ">
             <div class="container-fluid">
                 <div class="row">
@@ -2026,7 +2044,7 @@
     <!-- /End Cowndown Area -->
 
     <!-- Start Shop Blog  -->
-    <section class="shop-blog section">
+    <section class=" shop-blog section d-none">
         <div class="container">
             <div class="row">
                 <div class="col-12">

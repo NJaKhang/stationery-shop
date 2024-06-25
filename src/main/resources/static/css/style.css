@@ -35,6 +35,7 @@ Version:1.0
 20. 404 Error CSS
 21. Footer CSS
 ========================================*/
+
 .color-plate {
     position: fixed;
     display: block;
@@ -1909,7 +1910,7 @@ Version:1.0
     -o-transition: all 250ms ease-out;
     transition: all 250ms ease-out;
 }
-.single-product .product-img .product-action-2 a {
+.single-product .product-img .product-action-2 a, .single-product .product-img .product-action-2 button{
     display: block;
     background-color: transparent;
     color: #333;
@@ -1920,7 +1921,7 @@ Version:1.0
     line-height: 1;
     display: inline-block;
 }
-.single-product .product-img .product-action-2 a:hover {
+.single-product .product-img .product-action-2 a:hover, .single-product .product-img .product-action-2 button:hover {
     color:#F7941D;
 }
 .single-product .button-head {

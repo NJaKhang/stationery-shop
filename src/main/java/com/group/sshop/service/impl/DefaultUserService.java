@@ -1,5 +1,6 @@
 package com.group.sshop.service.impl;
 
+import com.group.sshop.models.dto.ProfileForm;
 import com.group.sshop.models.dto.RegisterFrom;
 import com.group.sshop.models.entities.User;
 import com.group.sshop.models.enums.UserRole;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +43,19 @@ public class DefaultUserService implements UserService {
     @Override
     public boolean existByEmail(String s) {
         return userRepository.existsByEmail(s);
+    }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public void update(ProfileForm profileForm, Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setFullName(profileForm.getFullName());
+        user.setEmail(profileForm.getEmail());
+        userRepository.save(user);
     }
 }

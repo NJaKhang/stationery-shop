@@ -19,24 +19,30 @@ public class LoginController {
 
     @GetMapping("/login")
     public ModelAndView login() {
-        return new ModelAndView("web/login");
+        ModelAndView loginView = new ModelAndView("web/login");
+        loginView.addObject("title", "Login");
+        return loginView;
     }
 
     @GetMapping("/register")
-    public ModelAndView register(RegisterFrom registerFrom){
-        return new ModelAndView("web/register");
+    public ModelAndView register(RegisterFrom registerFrom) {
+        ModelAndView registerView = new ModelAndView("web/register");
+        registerView.addObject("title", "Register");
+        return registerView;
     }
 
 
     @PostMapping("/register")
-    public ModelAndView handleRegister(@ModelAttribute @Valid RegisterFrom registerFrom, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public ModelAndView handleRegister(@ModelAttribute @Valid RegisterFrom registerFrom, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ModelAndView("web/register");
         } else {
             userService.registerNewUser(registerFrom);
         }
 
-        return new ModelAndView("redirect:/");
+        ModelAndView homeView = new ModelAndView("redirect:/");
+        homeView.addObject("title", "Home");
+        return homeView;
     }
 
 

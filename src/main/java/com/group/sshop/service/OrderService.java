@@ -1,5 +1,7 @@
 package com.group.sshop.service;
 
+import com.group.sshop.models.domain.Cart;
+import com.group.sshop.models.dto.CheckoutForm;
 import com.group.sshop.models.dto.OrderResponse;
 import com.group.sshop.models.dto.datatable.DataTableRequest;
 import com.group.sshop.models.dto.datatable.DataTableResponse;
@@ -12,6 +14,8 @@ public interface OrderService {
     Order findById(Long id);
 
     void confirmPayment(Long id);
+
+    void checkout(CheckoutForm checkoutForm, Cart cart, Long userId);
 
     void setStatus(Long id, OrderStatus status);
 }

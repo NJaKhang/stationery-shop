@@ -1,0 +1,10 @@
+.product-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số lượng hàng bạn muốn hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.2em; /* Điều chỉnh giá trị này tùy thuộc vào kích thước font */
+    max-height: 2.4em; /* Điều chỉnh giá trị này tùy thuộc vào kích thước font */
+}

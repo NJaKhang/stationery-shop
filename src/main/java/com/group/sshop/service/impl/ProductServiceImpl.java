@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -86,6 +87,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not fount product"));
+    }
+
+    @Override
+    public Product findByAlias(String alias) {
+        return productRepository.findByAlias(alias)
+                .orElseThrow(() -> new ResourceNotFoundException("Not fount product"));
+    }
+
+    @Override
+    public Page<Product> findPageByCategory(Pageable pageable, String categoryAlias) {
+        return productRepository.findByCategory(pageable, categoryAlias);
     }
 
     @Override
