@@ -4,6 +4,7 @@ import com.group.sshop.models.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLRestriction("deleted <> true")
 public class Product extends AbstractEntity {
     private String name;
     @Column(columnDefinition = "Text")

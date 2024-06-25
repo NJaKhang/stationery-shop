@@ -9,9 +9,10 @@ import com.group.sshop.models.entities.*;
 import com.group.sshop.repository.*;
 import com.group.sshop.service.ProductService;
 import lombok.AllArgsConstructor;
-
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,18 +41,19 @@ public class ProductServiceImpl implements ProductService {
         image.setAlt(productForm.getName());
 
         Product product = Product.builder()
-                .name(productForm.getName())
-                .alias(productForm.getAlias())
-                .cost(productForm.getCost())
-                .price(productForm.getPrice())
+                .shortDescription(productForm.getShortDescription())
+                .description(productForm.getDescription())
                 .discount(productForm.getDiscount())
                 .status(productForm.getStatus())
-                .description(productForm.getDescription())
+                .alias(productForm.getAlias())
+                .price(productForm.getPrice())
+                .name(productForm.getName())
+                .cost(productForm.getCost())
                 .sku(productForm.getSku())
-                .thumbnail(image)
-                .category(category)
-                .tags(tags)
                 .producer(producer)
+                .category(category)
+                .thumbnail(image)
+                .tags(tags)
                 .build();
         productRepository.save(product);
 
@@ -59,7 +61,6 @@ public class ProductServiceImpl implements ProductService {
         productRecord.setProduct(product);
         productRecord.setId(product.getId());
         productRecordRepository.save(productRecord);
-
 
 
     }
@@ -71,8 +72,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public DataTableResponse<LineProductResponse> findAll(DataTableRequest dataTableRequest) {
-        Page<Product> page = productRepository.findAll(dataTableRequest.getPageable());
+        Page<Product> page = productRepository.findAll(getSerchSpecification(dataTableRequest.getSearch().getValue()), dataTableRequest.getPageable());
         List<LineProductResponse> products = page.map(LineProductResponse::map).stream().toList();
+
+
         return DataTableResponse.<LineProductResponse>builder()
                 .draw(dataTableRequest.getDraw())
                 .recordsFiltered(page.getTotalElements())
@@ -101,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
     public void update(Long id, ProductForm productForm) {
         Product product = findById(id);
         Image image = product.getThumbnail();
-        if(!image.getUrl().equals(productForm.getImageUrl())){
+        if (!image.getUrl().equals(productForm.getImageUrl())) {
             image = new Image();
             image.setUrl(productForm.getImageUrl());
             image.setAlt(productForm.getName());
@@ -123,8 +126,10 @@ public class ProductServiceImpl implements ProductService {
         product.setDiscount(product.getDiscount());
         product.setStatus(productForm.getStatus());
         product.setProducer(producer);
+        product.setName(productForm.getName());
         product.setTags(tags);
         product.setPrice(productForm.getPrice());
+        product.setShortDescription(productForm.getShortDescription());
         productRepository.save(product);
 
     }
@@ -135,10 +140,25 @@ public class ProductServiceImpl implements ProductService {
         product.setDeleted(true);
         productRepository.save(product);
     }
-      @Override
+
+    @Override
     public Page<Product> findPage(Pageable pageable) {
-        System.out.println(pageable);
+
         return productRepository.findAll(pageable);
+    }
+
+    private Specification<Product> getSerchSpecification(String key) {
+        return (root, query, criteriaBuilder) -> {
+            if (Strings.isEmpty(key))
+                return criteriaBuilder.conjunction();
+            return criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("name"), "%" + key + "%"),
+                    criteriaBuilder.like(root.get("sku"), "%" + key + "%"),
+                    criteriaBuilder.like(root.<Long>get("id").as(String.class), "%" + key + "%"),
+                    criteriaBuilder.like(root.get("category").get("name"), "%" + key + "%")
+            );
+        };
+
     }
 
 

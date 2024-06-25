@@ -70,6 +70,7 @@ public class AdminProductController {
         productForm.setImageUrl(product.getThumbnail().getUrl());
         productForm.setTagIds(product.getTags().stream().map(Tag::getId).toList());
         productForm.setStatus(product.getStatus());
+        productForm.setShortDescription(product.getShortDescription());
 
 
         ModelAndView modelAndView = new ModelAndView("admin/product-edit");
