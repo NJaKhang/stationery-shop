@@ -24,7 +24,7 @@
                         <ul class="list-main">
                             <li><i class="ti-location-pin"></i> Địa Chỉ Cửa Hàng</li>
                             <li><i class="ti-alarm-clock"></i> <a href="#">Khuyến Mãi</a></li>
-                            <li sec:authorize="isAuthenticated()"><i class="ti-user"></i> <a href="/account"
+                            <li sec:authorize="isAuthenticated()"><i class="ti-user"></i> <a href="/profile"
                                                                                              th:text="${#authentication.principal.fullName}">Tài
                                 Khoản</a></li>
                             <li sec:authorize="isAnonymous()"><i class="ti-new-window"></i><a href="/login"
@@ -85,7 +85,7 @@
                             <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                         </div>
                         <div class="sinlge-bar">
-                            <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                            <a href="/profile" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                         </div>
                         <div class="sinlge-bar shopping">
                             <a href="/cart" class="single-icon"><i class="ti-bag"></i> <span
