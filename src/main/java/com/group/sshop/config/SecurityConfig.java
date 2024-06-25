@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/staff/**").hasAuthority("STAFF")
+                        .requestMatchers("/payment/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(configurer -> configurer
                         .loginProcessingUrl("/process-login")

@@ -21,10 +21,10 @@ public class Order extends AbstractEntity {
     @OneToMany(mappedBy = "order")
     private List<OrderDetails> orderDetails = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_details_id")
     private ShippingDetails shippingDetails;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_details_id")
     private PaymentDetails paymentDetails;
 

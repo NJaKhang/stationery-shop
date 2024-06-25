@@ -1,9 +1,6 @@
 package com.group.sshop.models.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShippingDetails extends AbstractEntity{
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     private double cost;

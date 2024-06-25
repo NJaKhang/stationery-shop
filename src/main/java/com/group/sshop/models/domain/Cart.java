@@ -18,4 +18,6 @@ public class Cart {
     public double getTotalWithShip() {
         return total + 45000.0;
     }
+
+
 }

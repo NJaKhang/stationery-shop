@@ -3,177 +3,177 @@
       th:replace="/web/layout/layout::layout(${title}, ~{::#content}, false)">
 <body>
 <section id="content">
-    <!-- Start Checkout -->
-    <section class="shop checkout section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="checkout-form">
-                        <h2>Hãy Thanh Toán Ở Đây</h2>
-                        <p>Vui lòng đăng ký để có thể thanh toán nhanh hơn</p>
-                        <!-- Form -->
-                        <form class="form" method="post" action="#">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label>Tên Của Bạn<span>*</span></label>
-                                        <input type="text" name="name" placeholder="" required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label>Họ Của Bạn<span>*</span></label>
-                                        <input type="text" name="name" placeholder="" required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label>Địa Chỉ Email<span>*</span></label>
-                                        <input type="email" name="email" placeholder="" required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label>Địa Chỉ<span>*</span></label>
-                                        <input type="text" name="address"
-                                               placeholder="ví dụ: 123/3 đường Lê Lợi, phường Bến Nghé, Quận 1, Thành /huy  phố Hồ Chí Minh"
-                                               required="required">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!--/ End Form -->
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="order-details">
-                        <!-- Order Widget -->
-                        <div class="single-widget">
-                            <h2>THÔNG TIN ĐƠN HÀNG</h2>
-                            <div class="content">
-                                <ul>
-                                    <li>Tổng cộng<span th:text="${#numbers.formatCurrency(cart.total)}">$330.00</span></li>
-                                    <li>Phí vận chuyển
-                                        <span
-                                                th:if="(${cart.total > 999999})">Miễn phí</span>
-                                        <span
-                                                th:if="(${cart.total < 999999})">45.000đ</span></li>
-                                    <li class="last">Tổng thanh toán
-                                        <span th:if="(${cart.total > 999999})" th:text="${#numbers.formatCurrency(cart.total)}">--</span>
-                                        <span th:if="(${cart.total < 999999})"
-                                              th:text="${#numbers.formatCurrency(cart.getTotalWithShip())}">--</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!--/ End Order Widget -->
-                        <!-- Order Widget -->
-                        <div class="single-widget">
-                            <h2>Thanh Toán</h2>
-                            <div class="content">
-                                <div class="checkbox">
-<!--                                    <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox">-->
-<!--                                        Chuyển khoản</label>-->
-                                    <label class="checkbox-inline" for="2"><input required name="news" id="2" type="checkbox">
-                                        Thanh toán khi nhận hàng</label>
-<!--                                    <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">-->
-<!--                                        PayPal</label>-->
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ End Order Widget -->
-                        <!-- Payment Method Widget -->
-                        <div class="single-widget payement d-none">
-                            <div class="content">
-                                <img src="images/payment-method.png" alt="#">
-                            </div>
-                        </div>
-                        <!--/ End Payment Method Widget -->
-                        <!-- Button Widget -->
-                        <div class="single-widget get-button">
-                            <div class="content">
-                                <div class="button">
-                                    <a href="/payment" class="btn">Đặt hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ End Button Widget -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--/ End Checkout -->
-
-    <!-- Start Shop Services Area  -->
-    <section class="shop-services section home">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-rocket"></i>
-                        <h4>Miễn Phí Vận Chuyển</h4>
-                        <p> Đơn Hàng Trên 1.000.000đ</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-reload"></i>
-                        <h4>Hoàn Trả Miễn Phí</h4>
-                        <p>Trong vòng 7 ngày</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-lock"></i>
-                        <h4>Thanh Toán Thành Công</h4>
-                        <p>An toàn 100%</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-tag"></i>
-                        <h4>Giá Tốt Nhất</h4>
-                        <p>Đảm bảo giá tốt nhất thị trường</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Shop Services -->
-
-    <!-- Start Shop Newsletter  -->
-    <section class="shop-newsletter section">
-        <div class="container">
-            <div class="inner-top">
+    <form th:action="@{/payment}" method="post">
+        <!-- Start Checkout -->
+        <section class="shop checkout section">
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2 col-12">
-                        <!-- Start Newsletter Inner -->
-                        <div class="inner">
-                            <h4>Bảng Tin</h4>
-                            <p> Đăng ký nhận bản tin của chúng tôi và được giảm giá <span>10%</span> cho lần mua hàng
-                                đầu tiên của bạn</p>
-                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                <input name="EMAIL" placeholder="Địa chỉ email của bạn" required="" type="email">
-                                <button class="btn">Đặt Mua</button>
+                    <div class="col-lg-8 col-12">
+                        <div class="checkout-form">
+                            <h2>Hãy Thanh Toán Ở Đây</h2>
+                            <p>Vui lòng đăng ký để có thể thanh toán nhanh hơn</p>
+                            <!-- Form -->
+                            <form class="form" method="post" action="#">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Tên người nhận<span>*</span></label>
+                                            <input type="text" name="receiver" placeholder="" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Phone Number<span>*</span></label>
+                                            <input type="number" name="phoneNumber" placeholder="" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Địa Chỉ<span>*</span></label>
+                                            <input type="text" name="address"
+                                                   placeholder="ví dụ: 123/3 đường Lê Lợi, phường Bến Nghé, Quận 1, Thành /huy  phố Hồ Chí Minh"
+                                                   required="required">
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
+                            <!--/ End Form -->
                         </div>
-                        <!-- End Newsletter Inner -->
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="order-details">
+                            <!-- Order Widget -->
+                            <div class="single-widget">
+                                <h2>THÔNG TIN ĐƠN HÀNG</h2>
+                                <div class="content">
+                                    <ul>
+                                        <li>Tổng cộng<span
+                                                th:text="${#numbers.formatCurrency(cart.total)}">$330.00</span></li>
+                                        <li>Phí vận chuyển
+                                            <span
+                                                    th:if="(${cart.total > 999999})">Miễn phí</span>
+                                            <span
+                                                    th:if="(${cart.total < 999999})">45.000đ</span></li>
+                                        <li class="last">Tổng thanh toán
+                                            <span th:if="(${cart.total > 999999})"
+                                                  th:text="${#numbers.formatCurrency(cart.total)}">--</span>
+                                            <span th:if="(${cart.total < 999999})"
+                                                  th:text="${#numbers.formatCurrency(cart.getTotalWithShip())}">--</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/ End Order Widget -->
+                            <!-- Order Widget -->
+                            <div class="single-widget">
+                                <h2>Thanh Toán</h2>
+                                <div class="content">
+                                    <div class="checkbox">
+                                        <!--                                    <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox">-->
+                                        <!--                                        Chuyển khoản</label>-->
+                                        <label class="checkbox-inline" for="2"><input required value="CASH"
+                                                                                      name="paymentMethod" id="2"
+                                                                                      type="checkbox">
+                                            Thanh toán khi nhận hàng</label>
+                                        <!--                                    <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">-->
+                                        <!--                                        PayPal</label>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ End Order Widget -->
+                            <!-- Payment Method Widget -->
+                            <div class="single-widget payement d-none">
+                                <div class="content">
+                                    <img src="images/payment-method.png" alt="#">
+                                </div>
+                            </div>
+                            <!--/ End Payment Method Widget -->
+                            <!-- Button Widget -->
+                            <div class="single-widget get-button">
+                                <div class="content">
+                                    <div class="button">
+                                        <button type="submit" class="btn">Đặt hàng</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ End Button Widget -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- End Shop Newsletter -->
+        </section>
+        <!--/ End Checkout -->
 
+        <!-- Start Shop Services Area  -->
+        <section class="shop-services section home">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-rocket"></i>
+                            <h4>Miễn Phí Vận Chuyển</h4>
+                            <p> Đơn Hàng Trên 1.000.000đ</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-reload"></i>
+                            <h4>Hoàn Trả Miễn Phí</h4>
+                            <p>Trong vòng 7 ngày</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-lock"></i>
+                            <h4>Thanh Toán Thành Công</h4>
+                            <p>An toàn 100%</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-tag"></i>
+                            <h4>Giá Tốt Nhất</h4>
+                            <p>Đảm bảo giá tốt nhất thị trường</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Shop Services -->
+
+        <!-- Start Shop Newsletter  -->
+        <section class="shop-newsletter section">
+            <div class="container">
+                <div class="inner-top">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 col-12">
+                            <!-- Start Newsletter Inner -->
+                            <div class="inner">
+                                <h4>Bảng Tin</h4>
+                                <p> Đăng ký nhận bản tin của chúng tôi và được giảm giá <span>10%</span> cho lần mua
+                                    hàng
+                                    đầu tiên của bạn</p>
+                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                    <input name="EMAIL" placeholder="Địa chỉ email của bạn"  type="email">
+                                    <button class="btn">Đặt Mua</button>
+                                </form>
+                            </div>
+                            <!-- End Newsletter Inner -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Shop Newsletter -->
+    </form>
 </section>
 </body>
 </html>

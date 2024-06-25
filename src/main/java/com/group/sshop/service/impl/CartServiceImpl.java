@@ -57,4 +57,9 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = cartItems.stream().filter(cartItem1 -> cartItem1.getProduct().getId().equals(aLong)).findFirst().get();
             cartItem.setQuantity(integer);
     }
+
+    @Override
+    public void clear() {
+        cartItems.clear();
+    }
 }
