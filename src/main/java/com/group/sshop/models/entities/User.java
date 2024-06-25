@@ -5,6 +5,7 @@ import com.group.sshop.models.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.Hibernate;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -28,4 +29,11 @@ public class User extends AbstractEntity{
     private UserRole role;
     private Timestamp verifiedAt;
     private UserStatus status;
+
+    @OneToMany(mappedBy = "orderBy")
+    private List<Order> orders;
+
+    public int countOrder(){
+        return Hibernate.size(orders);
+    }
 }

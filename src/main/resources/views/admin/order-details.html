@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/admin/layout/admin-layout::admin-layout('Edit product', ~{::#content}, ~{::script})"
+      xmlns="http://www.w3.org/1999/html">
+<body>
+<main id="content">
+    <!-- Container for demo purpose -->
+    <div class="container p-4">
+
+        <!-- Section: Sales Performance KPIs -->
+        <section class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/products">Orders</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" th:text="${'#' + order.code}">
+                    </li>
+                </ol>
+            </nav>
+        </section>
+        <!-- Section: Sales Performance KPIs -->
+
+        <!--Section: Shopping Funnel & Product revenue-->
+        <section class="mb-4">
+
+            <!--/*@thymesVar id="productForm" type="com.group.sshop.models.dto.ProductForm"*/-->
+            <div class="row">
+                <div class="col-md-9 mb-4">
+                    <div class="card rounded-1 shadow-0 rounded-1  mb-4">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center align-content-center">
+                                <b th:text="${'#' + order.code}"></b>
+                                <div th:switch="${order.status.toString()}">
+                                    <div th:case="'WAIT'">
+                                        <span class="badge badge-warning" th:text="#{order.status.WAIT}">Primary</span>
+                                    </div>
+                                    <div th:case="'DONE'">
+                                        <span class="badge badge-success" th:text="#{order.status.DONE}">Primary</span>
+                                    </div>
+                                    <div th:case="'CANCLED'">
+                                        <span class="badge badge-danger"
+                                              th:text="#{order.status.CANCELED}">Primary</span>
+                                    </div>
+                                    <div th:case="'RETURN'">
+                                        <span class="badge badge-info" th:text="#{order.status.RETURN}">Primary</span>
+                                    </div>
+                                    <div th:case="'SHIPPING'">
+                                        <span class="badge badge-info" th:text="#{order.status.SHIPPING}">Primary</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <table class="table align-middle mb-0 bg-white">
+
+                                    <tbody>
+                                    <tr th:each="item:${order.orderDetails}">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img
+                                                        th:src="${item.product.thumbnail.url}"
+                                                        alt=""
+                                                        style="width: 45px; height: 45px"
+                                                        class="rounded-circle"
+                                                />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="ms-3">
+                                                <p class="fw-bold mb-1"
+                                                   th:text="${item.product.name}"
+                                                >John Doe</p>
+                                                <p class="text-muted mb-0"
+                                                   th:text="${item.product.category.name}"
+                                                ></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <s th:if="${item.discount > 0}"
+                                               th:text="${#numbers.formatCurrency(item.price)}" class="text-danger"></s><br>
+                                            <span th:text="${#numbers.formatCurrency(item.price - item.discount)}"></span>
+                                        </td>
+                                        <td>
+                                            x
+                                        </td>
+                                        <td th:text="${item.quantity}">
+
+                                        </td>
+
+                                        <td th:text="${#numbers.formatCurrency(item.getTotal())}">
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-7">
+
+                                </div>
+                                <div class="col-5">
+                                    <table class="table table-borderless text-right table-sm"
+                                           th:with="summary=${order.getSummary()}">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="text-right">
+                                        <tr>
+                                            <td>Quantity</td>
+                                            <td th:text="${order.getQuantity()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subtotal</td>
+                                            <td th:text="${#numbers.formatCurrency(summary.getItemSubTotal())}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Discount</td>
+                                            <td th:text="${#numbers.formatCurrency(summary.getProductDiscount())}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Voucher</td>
+                                            <td th:text="${#numbers.formatCurrency(summary.voucherDiscount)}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping</td>
+                                            <td th:text="${#numbers.formatCurrency(summary.shippingCost)}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tax</td>
+                                            <td th:text="${#numbers.formatCurrency(0)}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total amount</td>
+                                            <td th:text="${#numbers.formatCurrency(summary.total)}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Paid amount</td>
+                                            <td th:text="${#numbers.formatCurrency(order.paymentDetails.amount)}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment method</td>
+                                            <td>
+                                                <div th:switch="${order.paymentDetails.method.toString()}">
+                                                    <div th:case="'MOBILE'">
+                                                        <span class="badge badge-success">Mobile</span>
+                                                    </div>
+                                                    <div th:case="'BANKING'">
+                                                        <span class="badge badge-success">Banking</span>
+                                                    </div>
+                                                    <div th:case="'CASH'">
+                                                        <span class="badge badge-success">Cash</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment status</td>
+                                            <td>
+                                                <div th:switch="${order.paymentDetails.status.toString()}">
+                                                    <div th:case="'DONE'">
+                                                        <span class="badge badge-success">Completed</span>
+                                                    </div>
+                                                    <div th:case="'ERROR'">
+                                                        <span class="badge badge-danger">Error</span>
+                                                    </div>
+                                                    <div th:case="'WAIT'">
+                                                        <span class="badge badge-warning">Spending</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr m-0"/>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center"
+                                 th:if="${order.status.toString() ne 'WAIT'}">
+                                <span>
+                                    <i class="fa fa-check text-success me-2"></i>
+                                    Confirmed
+                                </span>
+                                <div>
+
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center"
+                                 th:if="${order.status.toString() eq 'WAIT'}">
+                                <span>
+                                    <i class="fa-regular fa-hourglass-start me-2"></i>
+                                    Waiting confirm
+                                </span>
+                                <div>
+                                    <a class="btn btn-outline-secondary shadow-0" th:href="${'/admin/orders/' + order.id + '/status?status=SHIPPING' }">
+                                        Confirm
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr m-0"/>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center"
+                                 th:if="${order.paymentDetails.status.toString() eq 'DONE'}">
+                                <span>
+                                    <i class="fa fa-check text-success me-2"></i>
+                                    <span th:text="${'Payment ' + #numbers.formatCurrency(order.paymentDetails.amount)}"></span>
+                                </span>
+                                <div>
+                                    <button class="btn btn-outline-secondary shadow-0">
+                                        Refund
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center"
+                                 th:if="${order.paymentDetails.status.toString() ne 'DONE'}">
+                                <span>
+                                    <i class="fa-regular fa-hourglass-start me-2"></i>
+                                    Waiting payment
+                                </span>
+                                <div>
+                                    <a class="btn btn-outline-secondary" th:href="${'/admin/orders/' + order.id + '/payment/confirm' }">
+                                        Confirm Payment
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr m-0"/>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center"
+                                 th:if="${order.status.toString() eq 'DONE'}">
+                                <span>
+                                    <i class="fa fa-check text-success me-2"></i>
+                                    <span>
+                                        Delivery
+                                    </span>
+                                </span>
+                                <div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center"
+                                 th:if="${order.status.toString() ne 'DONE'}">
+                                <span>
+                                    <i class="fa-regular fa-hourglass-start me-2"></i>
+                                    Shipping
+                                </span>
+                                <div>
+                                    <a class="btn btn-outline-secondary shadow-0" th:href="${'/admin/orders/' + order.id + '/status?status=DONE' }">
+                                        Received
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body mt-2">
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <span class="small text-muted text-uppercase fw-bold">
+                                            Shipping
+                                        </span>
+                                        <br/>
+                                        <span class="text-primary" th:text="${'#' + order.shippingDetails.id}">
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="small text-muted text-uppercase fw-bold">
+                                            Status
+                                        </span>
+                                        <br/>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="small text-muted text-uppercase fw-bold">
+                                            Provider
+                                        </span>
+                                        <br/>
+                                        <span th:text="${order.shippingDetails.provider}">
+
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+
+                                    <div class="col-4">
+                                        <span class="small text-muted text-uppercase fw-bold">
+                                            Created At
+                                        </span>
+                                        <br/>
+                                        <span th:text="${order.shippingDetails.createdAt}">
+
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="small text-muted text-uppercase fw-bold">
+                                            Last Update
+                                        </span>
+                                        <br/>
+                                        <span th:text="${order.shippingDetails.updatedAt}">
+
+                                        </span>
+
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card rounded-1 shadow-0 shadow-0 mb-4">
+                        <div class="card-header">
+                            Customer
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex ">
+                                <img
+                                        th:src="${order.orderBy.getAvatar().url}"
+                                        alt=""
+                                        style="width: 45px; height: 45px"
+                                        class="rounded-circle"
+                                />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1" th:text="${order.orderBy.fullName}">John Doe</p>
+                                    <p class="text-muted mb-0" th:text="${order.orderBy.email}">john.doe@gmail.com</p>
+                                    <p class="text-muted mb-0"><i class="fa fa-cube me-2"></i><span
+                                            th:text="${order.orderBy.countOrder()} +' order(s)'"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+        <!--Section: Shopping Funnel & Product revenue-->
+
+
+    </div>
+    <!-- Container for demo purpose -->
+
+</main>
+<script th:fragment="script">
+
+
+</script>
+<!--Main layout-->
+</body>
+</html>

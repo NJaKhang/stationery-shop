@@ -26,13 +26,15 @@
                     <div class="card shadow-0 shadow-0 p-2 rounded-1">
                         <div class="card-body p-2 d-flex justify-content-between">
                             <div>
-                                <a th:href="@{/admin/products/form}" class="btn btn-outline-primary shadow-1">
-                                    <i class="fa-regular fa-file-import me-2"></i> Import
-                                </a>
+                                <div class="form-outline" data-mdb-datepicker-init data-mdb-input-init
+                                     data-mdb-inline="true">
+                                    <input type="text" class="form-control" id="exampleDatepicker2"/>
+                                    <label for="exampleDatepicker2" class="form-label">Select a date</label>
+                                </div>
                             </div>
                             <div>
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Search"/>
+                                    <input class="form-control" placeholder="Search" type="search" id="table-search"/>
                                     <button class="btn btn-outline-secondary" type="button" data-mdb-ripple-init
                                             data-mdb-ripple-color="dark">
                                         <i class="fa-regular fa-search me-2"></i>
@@ -98,7 +100,6 @@
 
     let table = new DataTable('#table', {
         serverSide: true,
-        searching: false,
         ordering: true,
         select: true,
         lengthChange: false,
@@ -129,6 +130,14 @@
                     return row.customerName;
                 }
             },
+            {
+                name: "crateAt",
+                title: "Date",
+                render: (data, type, row, meta) => {
+                    return row.orderDate;
+                }
+            },
+
             {
                 name: "quantity",
                 title: "Quantity",
@@ -172,7 +181,7 @@
                 orderable: false,
                 render: (data, type, row) => {
                     return `
-                        <span class="d-flex"><button class="btn btn-danger btn-floating shadow-1 me-1 btn-sm" onclick="showConfirmDelete(${row.id})"><i class="fa fa-trash"></i></button><a class="btn btn-info btn-floating shadow-1 btn-sm" href="/admin/products/edit/${row.id}"><i class="fa fa-edit"></i></a></span>
+                        <span class="d-flex"><button class="btn btn-danger btn-floating shadow-1 me-1 btn-sm" onclick="showConfirmDelete(${row.id})"><i class="fa fa-trash"></i></button><a class="btn btn-info btn-floating shadow-1 btn-sm" href="/admin/orders/${row.id}"><i class="fa fa-edit"></i></a></span>
                     `
                 }
 
@@ -189,6 +198,20 @@
         }
 
     });
+
+    let delay
+
+    $('#table-search').on("input", function () {
+        clearTimeout(delay);
+        delay = setTimeout(function () {
+            table.search($(this).val()).draw();
+        }.bind(this), 800);
+    });
+
+    $('#table-search')[0].onsearch = function () {
+        clearTimeout(delay);
+        table.search($(this).val()).draw();
+    };
     const element = document.querySelector('#confirmDelete');
     const confirmModal = new mdb.Modal(element)
     let id
@@ -210,6 +233,7 @@
         confirmModal.hide()
 
     }
+
 
 
 </script>

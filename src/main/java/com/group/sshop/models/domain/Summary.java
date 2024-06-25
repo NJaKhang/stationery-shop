@@ -10,6 +10,7 @@ import lombok.Setter;
 @Builder
 public class Summary {
     private double total;
+    private double itemSubTotal;
     private double subtotal;
     private double totalDiscount;
     private double productDiscount;

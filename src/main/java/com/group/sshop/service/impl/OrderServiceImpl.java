@@ -6,12 +6,14 @@ import com.group.sshop.models.dto.datatable.DataTableRequest;
 import com.group.sshop.models.dto.datatable.DataTableResponse;
 import com.group.sshop.models.entities.Order;
 import com.group.sshop.models.entities.PaymentDetails;
+import com.group.sshop.models.enums.OrderStatus;
 import com.group.sshop.models.enums.PaymentStatus;
 import com.group.sshop.repository.OrderRepository;
 import com.group.sshop.repository.PaymentRepository;
 import com.group.sshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,15 @@ public class OrderServiceImpl implements OrderService {
         paymentDetails.setAmount(order.getTotal());
         paymentDetails.setStatus(PaymentStatus.DONE);
         paymentRepository.save(paymentDetails);
+    }
+
+    @Override
+    public void setStatus(Long id, OrderStatus status) {
+        Order order = findById(id);
+
+
+        order.setStatus(status);
+        orderRepository.save(order);
     }
 
     private Specification<Order> getSerchSpecification(String key) {
